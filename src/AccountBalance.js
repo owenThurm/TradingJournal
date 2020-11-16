@@ -6,16 +6,15 @@ class AccountBalance extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      balance: 0
+      balance: 1000
     };
   }
 
   render() {
     return(
-      <div className="AccountBalance">{this.state}</div>
+    <div className="AccountBalance">{'Balance: $' + this.state.balance}</div>
     )
   }
-
-
-
 }
+
+export default AccountBalance;

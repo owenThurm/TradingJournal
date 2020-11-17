@@ -6,6 +6,7 @@
   margin-bottom: 20px;
 }
 
+
 .WeeklyChange {
   background-color: aquamarine;
   width: 10%;
@@ -15,6 +16,7 @@
 
 .JournalContainer {
   margin: auto;
+  background-color: gray;
   width: 80%;
   margin-top: 60px;
 }

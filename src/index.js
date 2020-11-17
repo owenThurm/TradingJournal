@@ -2,11 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import Journal from './Journal';
+import Dashboard from './Dashboard';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Journal />
+    <Dashboard />
   </React.StrictMode>,
   document.getElementById('root')
 );

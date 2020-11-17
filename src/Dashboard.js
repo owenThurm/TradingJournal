@@ -1,19 +1,21 @@
 import AccountBalance from './AccountBalance';
 import React from 'react';
-import './Journal.css';
+import './Dashboard.css';
 import WeeklyChange from './WeeklyChange';
 import EquityGraph from './EquityGraph';
+import Statistics from './Statistics';
 
-class Journal extends React.Component {
+class Dashboard extends React.Component {
   render() {
     return(
-      <div className="JournalContainer">
+      <div className="DashboardContainer">
         <AccountBalance balance={1000}/>
         <WeeklyChange change={3.2}/>
         <EquityGraph/>
+        <Statistics />
       </div>
     );
   }
 }
 
-export default Journal;
+export default Dashboard;

@@ -1,5 +1,5 @@
 import React from 'react';
-import './Journal.css';
+import './Dashboard.css';
 
 class AccountBalance extends React.Component {
 

@@ -14,9 +14,15 @@
   text-align: center;
 }
 
+@import '~antd/dist/antd.css';
+
 .DashboardContainer {
   margin: auto;
   background-color: gray;
   width: 80%;
   margin-top: 60px;
+}
+
+.tradingStats {
+  text-align: center;
 }

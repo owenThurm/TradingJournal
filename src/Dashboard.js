@@ -13,9 +13,16 @@ class Dashboard extends React.Component {
     return (
       <div className="DashboardContainer">
         <div>
-          <AccountBalance balance={1000} />
-          <WeeklyChange change={3.2} />
-          <EquityGraph />
+          <Row gutter={[16, 16]}>
+            <Col flex="4"> <AccountBalance balance={1000} /></Col>
+            <Col flex="auto"> <EquityGraph /></Col>
+          </Row>
+          <Row gutter={[16, 16]}>
+            <Col flex="auto"><WeeklyChange change={3.2} /></Col>
+          </Row>
+
+
+
         </div>
         <Statistics />
 

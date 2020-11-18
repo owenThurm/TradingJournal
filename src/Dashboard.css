@@ -16,13 +16,24 @@
 
 @import '~antd/dist/antd.css';
 
+body {
+  background-color: rgb(187, 197, 190);
+}
+
 .DashboardContainer {
   margin: auto;
-  background-color: gray;
   width: 80%;
   margin-top: 60px;
 }
 
 .tradingStats {
   text-align: center;
+}
+
+.winner {
+  color: green;
+}
+
+.loser {
+  color: red;
 }

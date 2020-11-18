@@ -1,6 +1,6 @@
 import React from 'react';
 import Winrate from './Winrate';
-import { Row, Col } from 'antd';
+import { Row, Col, Progress } from 'antd';
 
 class Statistics extends React.Component {
 
@@ -37,21 +37,20 @@ class Statistics extends React.Component {
                 <h1>Statistics Test</h1>
                 <Row gutter={[24, 16]}>
                     <Col span={3}>
-                        {this.state.statistics.numWinners}
-                        <br />
-                        {this.state.statistics.numLosers}
+                        <h3 className="winner">Winners: {this.state.statistics.numWinners}</h3>
+                        <h3 className="loser">Losers: {this.state.statistics.numLosers}</h3>
                     </Col>
-                    <Col span={8}><Winrate /></Col>
+                    <Col span={8}><Winrate/></Col>
                 </Row>
                 <Row gutter={[24, 16]}>
-                    <Col span={8}>{this.state.statistics.averageWinner}</Col>
-                    <Col span={8}>{this.state.statistics.averageLoser}</Col>
-                    <Col span={8}>{this.state.statistics.sumR}</Col>
+                    <Col span={8}>Average Winner: {this.state.statistics.averageWinner}</Col>
+                    <Col span={8}>Average Loser: {this.state.statistics.averageLoser}</Col>
+                    <Col span={8}>Sum R multiple: {this.state.statistics.sumR}</Col>
                 </Row>
                 <Row gutter={[24, 16]}>
-                    <Col span={8}>{this.state.statistics.averageR}</Col>
-                    <Col span={8}>{this.state.statistics.expectancy}</Col>
-                    <Col span={8}>{this.state.statistics.profitFactor}</Col>
+                    <Col span={8}>Average R multiple: {this.state.statistics.averageR}</Col>
+                    <Col span={8}>Expectancy: {this.state.statistics.expectancy}</Col>
+                    <Col span={8}>Profit Factor: {this.state.statistics.profitFactor}</Col>
                 </Row>
             </div>
 

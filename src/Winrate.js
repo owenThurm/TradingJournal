@@ -1,9 +1,10 @@
+import { Progress } from 'antd';
 
-const Winrate = () => {
+const Winrate = (props) => {
 
     return (
         <div>
-            <h1>Winrate</h1>
+            <Progress type="circle" percent={70} width={60} />
         </div>
     );
 

@@ -9,14 +9,6 @@ class OverallStatistics extends React.Component {
       timeframe: null
     };
   }
-
-
-
-
 }
 
 export default OverallStatistics;
-
-
-
-

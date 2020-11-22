@@ -20,9 +20,6 @@ class Dashboard extends React.Component {
           <Row gutter={[16, 16]}>
             <Col flex="auto"><WeeklyChange change={3.2} /></Col>
           </Row>
-
-
-
         </div>
         <Statistics />
 

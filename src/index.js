@@ -3,12 +3,37 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import Dashboard from './Dashboard';
+import { BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useRouteMatch,
+  useParams } from 'react-router-dom';
+import Journal from './Journal';
 //import 'antd/dist/antd.css';
 //import {DatePicker} from 'antd';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Dashboard />
+    <Router>
+      <ul>
+        <li>
+          <Link to="/">Home</Link>
+        </li>
+        <li>
+          <Link to="/journal">Journal</Link>
+        </li>
+      </ul>
+
+      <Switch>
+        <Route path="/journal">
+          <Journal />
+        </Route>
+        <Route path="/">
+          <Dashboard />
+        </Route>
+      </Switch>
+    </Router>
   </React.StrictMode>,
   document.getElementById('root')
 );

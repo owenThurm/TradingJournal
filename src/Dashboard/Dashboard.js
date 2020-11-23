@@ -4,7 +4,6 @@ import WeeklyChange from './WeeklyChange';
 import AccountBalance from './AccountBalance';
 import EquityGraph from './EquityGraph';
 import Statistics from './Statistics';
-import Winrate from './Winrate';
 import 'antd/dist/antd.css';
 import { Row, Col } from 'antd';
 

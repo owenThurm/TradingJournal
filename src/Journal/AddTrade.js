@@ -1,5 +1,6 @@
 import React from 'react';
 import { Modal, Button, Input, Select, InputNumber, Row, Col } from 'antd';
+import GeneralTradeData from './GeneralTradeData';
 
 class AddTrade extends React.Component {
   constructor(props) {
@@ -57,6 +58,15 @@ class AddTrade extends React.Component {
           onOk={this.handleSubmitTrade.bind(this, 'hello')}
           onCancel={this.handleCancel.bind(this)}
           width={1000}>
+
+          <Row gutter={[0, 0]}>
+            <Col>
+              <GeneralTradeData />
+            </Col>
+          </Row>
+
+
+          {/*
             <Row gutter={[10, 16]}>
               <Col>
                 <Input placeholder={'Instrument'} />
@@ -99,6 +109,7 @@ class AddTrade extends React.Component {
               </Col>
 
             </Row>
+          */}
           </Modal>
       </div>
     )

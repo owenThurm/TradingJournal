@@ -61,7 +61,7 @@ class AddTrade extends React.Component {
         onCancel={this.handleCancel.bind(this)}
         width={1000}>
 
-          <Row gutter={[10, 0]}>
+          <Row gutter={[10, 10]}>
             <Col>
               <GeneralTradeData />
             </Col>

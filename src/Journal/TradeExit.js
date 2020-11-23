@@ -6,7 +6,7 @@ class TradeExit extends React.Component {
 
   render() {
     return(
-      <Card title='Trade Exit' style={{ width: 250, height: 235 }}>
+      <Card title='Trade Exit' style={{ width: 250, height: 235}}>
         <Row gutter={[0, 30]}>
           <DatePicker placeholder={'Exit Date'} style={{width:300}}/>
         </Row>

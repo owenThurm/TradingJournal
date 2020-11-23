@@ -11,7 +11,7 @@ class GeneralTradeData extends React.Component {
 
   render() {
     return(
-      <Card title='General Trade Data' style={{width: 250}}>
+      <Card title='General Trade Data' style={{ width: 250 }}>
         <Row gutter={[0, 30]}>
           <DatePicker style={{width: 250}}/>
         </Row>

@@ -2,14 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import Dashboard from './Dashboard';
+import Dashboard from './Dashboard/Dashboard';
 import { BrowserRouter as Router,
   Switch,
   Route,
   Link,
   useRouteMatch,
   useParams } from 'react-router-dom';
-import Journal from './Journal';
+import Journal from './Journal/Journal';
 //import 'antd/dist/antd.css';
 //import {DatePicker} from 'antd';
 

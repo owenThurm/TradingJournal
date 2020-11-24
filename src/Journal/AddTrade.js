@@ -72,6 +72,8 @@ class AddTrade extends React.Component {
               <TradeExit />
             </Col>
           </Row>
+          <h3>Trade Comments</h3>
+          <Input placeholder="Got stopped out should play around with stop placement." />
         </Modal>
       </div>
     )

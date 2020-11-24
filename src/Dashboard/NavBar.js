@@ -1,9 +1,10 @@
 import React from 'react';
 import {
     Link,
-  } from 'react-router-dom';
-  import { Menu } from 'antd';
-  import { HomeOutlined, BookOutlined } from '@ant-design/icons';
+} from 'react-router-dom';
+import { Menu } from 'antd';
+import { HomeOutlined, BookOutlined } from '@ant-design/icons';
+
 
 
 function NavBar() {

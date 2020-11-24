@@ -7,24 +7,42 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
+  Redirect,
 } from 'react-router-dom';
 import Journal from './Journal/Journal';
 import NavBar from './Dashboard/NavBar';
+import ProtectedRoute from './ProtectedRoute';
+import LoginForm from './LoginForm';
 
 //import 'antd/dist/antd.css';
 //import {DatePicker} from 'antd';
 
+
+const LoginContainer = () => (
+  <div className="container">
+    <Route exact path="/" render={() => <Redirect to="/login" />} />
+    <Route path="/login" component={LoginForm} />
+  </div>
+);
+
+const DefaultContainer = () => (
+  <div className="container">
+    <NavBar />
+    <Switch>
+      <ProtectedRoute exact path="/journal" component={Journal} />
+      <ProtectedRoute exact path="/" component={Dashboard} />
+    </Switch>
+  </div>
+);
+
 ReactDOM.render(
   <React.StrictMode>
     <Router>
-      <NavBar />
       <Switch>
-        <Route path="/journal">
-          <Journal />
-        </Route>
-        <Route path="/">
-          <Dashboard />
-        </Route>
+
+        <Route exact path="/login" component={LoginContainer} />
+        <Route component={DefaultContainer} />
+
       </Switch>
     </Router>
   </React.StrictMode>,

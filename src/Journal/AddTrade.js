@@ -59,9 +59,9 @@ class AddTrade extends React.Component {
         visible={this.state.visible}
         onOk={this.handleSubmitTrade.bind(this, 'hello')}
         onCancel={this.handleCancel.bind(this)}
-        width={1000}>
+        width={820}>
 
-          <Row gutter={[10, 10]}>
+          <Row gutter={[10, 10]}  justify="center">
             <Col>
               <GeneralTradeData />
             </Col>

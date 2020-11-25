@@ -3,7 +3,7 @@ import React from 'react';
 import { Form, Input, Button, Checkbox } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
-function LoginForm() {
+function RegisterForm() {
 
   const onFinish = (values) => {
     console.log('Received values of form: ', values);
@@ -33,7 +33,7 @@ function LoginForm() {
           },
         ]}
       >
-        <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
+        <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Enter Your Username" />
       </Form.Item>
       <Form.Item
         name="password"
@@ -47,7 +47,7 @@ function LoginForm() {
         <Input
           prefix={<LockOutlined className="site-form-item-icon" />}
           type="password"
-          placeholder="Password"
+          placeholder="Enter Your Password"
         />
       </Form.Item>
       <Form.Item>
@@ -61,13 +61,12 @@ function LoginForm() {
       </Form.Item>
 
       <Form.Item>
-        <Button type="primary" htmlType="submit" className="login-form-button">
-          Log in
+        <Button type="primary" htmlType="submit" className="register-form-button">
+          Register
         </Button>
-        Or <a href="/register">Register now!</a>
       </Form.Item>
     </Form>
   );
 };
 
-export default LoginForm;
+export default RegisterForm;

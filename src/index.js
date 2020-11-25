@@ -13,6 +13,7 @@ import Journal from './Journal/Journal';
 import NavBar from './Dashboard/NavBar';
 import ProtectedRoute from './ProtectedRoute';
 import LoginForm from './LoginForm';
+import RegisterForm from './RegisterForm';
 
 //import 'antd/dist/antd.css';
 //import {DatePicker} from 'antd';
@@ -22,6 +23,7 @@ const LoginContainer = () => (
   <div className="container">
     <Route exact path="/" render={() => <Redirect to="/login" />} />
     <Route path="/login" component={LoginForm} />
+    <Route path="/register" component={RegisterForm} />
   </div>
 );
 
@@ -41,6 +43,7 @@ ReactDOM.render(
       <Switch>
 
         <Route exact path="/login" component={LoginContainer} />
+        <Route exact path="/register" component={LoginContainer} />
         <Route component={DefaultContainer} />
 
       </Switch>

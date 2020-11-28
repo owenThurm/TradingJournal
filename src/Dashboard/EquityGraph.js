@@ -35,13 +35,7 @@ class EquityGraph extends React.Component {
   render() {
     return (
       <div className="EquityGraph" style={{ width: 400, height: 200 }}>
-
-
-
         <canvas id="myChart" width="300" height="300"></canvas>
-
-
-
         {this.state.graph}
       </div>
     )

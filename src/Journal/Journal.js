@@ -2,6 +2,7 @@ import React from 'react';
 import { Modal, Button, Input } from 'antd';
 import { Table, Tag, Space } from 'antd';
 import AddTrade from './AddTrade';
+import axios from "axios";
 
 class Journal extends React.Component {
 
@@ -91,15 +92,22 @@ class Journal extends React.Component {
 
   }
 
+  componentDidMount = () => {
 
- 
-  
-  
-  
+
+    axios.get("/getAll").then(response => {
+      console.log(response);
+    }).catch(err => {
+      console.log(err);
+    });
+    
+
+  };
+
 
   render() {
     return(
-      <div>
+      <div style={{margin: "20px"}}>
         <p>Journal</p>
         <AddTrade />
         <br/>

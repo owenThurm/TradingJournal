@@ -3,12 +3,13 @@ const traders = require('./db/tradeModel');
 const bodyParser = require('body-parser');
 
 const app = Express();
-const port = 3000;
+const port = 5000;
 
 app.use(bodyParser.json());
 
+
 //GET ALL TRADERS
-app.get('/', async (req, res) => {
+app.get('/getAll', async (req, res) => {
   var trademans = await traders.getAll();
   res.json({
     tradeMansesis: trademans
@@ -29,7 +30,7 @@ app.get('/:username', (req, res) => {
 });
 
 //CREATE TRADER
-app.post('/', (req, res) => {
+app.post('/create', (req, res) => {
 
   var aLec = req.body;
   console.log(aLec);
@@ -89,7 +90,7 @@ app.delete('/:username', (req, res) => {
 });
 
 //WARNING: DELETE EVERYONE
-app.delete('/', (req, res) => {
+app.delete('/deleteAll', (req, res) => {
   traders.deleteAll().then(response => {
     res.status(200);
     res.json({

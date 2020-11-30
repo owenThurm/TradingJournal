@@ -96,7 +96,7 @@ class Journal extends React.Component {
 
   componentDidMount = () => {
     axios.get('/'+this.state.username).then(response => {
-      var trader = response.data.tradesman[0];
+      var trader = response.data.trader[0];
       var i = 1;
       var trades = trader.trades.map(trade => {
         return {
@@ -104,7 +104,7 @@ class Journal extends React.Component {
           tradeNum: i++,
           instrument: trade.instrument,
           strategy: trade.setup,
-          buyOrSell: '???',
+          buyOrSell: trade.buyOrSell,
           quantity: trade.quantity,
           entry: trade.entryPrice,
           exit: trade.exitPrice,

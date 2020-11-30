@@ -21,7 +21,7 @@ app.get('/:username', (req, res) => {
   var username = req.params.username;
   traders.getTrader(username).then(response => {
     res.json({
-      traders: response
+      trader: response
     });
   }).catch(err => {
     console.log(err);

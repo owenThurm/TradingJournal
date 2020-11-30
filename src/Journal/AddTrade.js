@@ -11,6 +11,7 @@ class AddTrade extends React.Component {
       visible: false,
       entryDate: null,
       instrument: null,
+      setup: null,
       buyOrSell: null,
       entryPrice: null,
       quantity: null,
@@ -65,6 +66,11 @@ class AddTrade extends React.Component {
       case 'instrument':
         this.setState({
           instrument: value
+        });
+        break;
+      case 'setup':
+        this.setState({
+          setup: value
         });
         break;
       case 'buyOrSell':

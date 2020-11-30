@@ -13,7 +13,9 @@ class GeneralTradeData extends React.Component {
     return(
       <Card title='General Trade Data' style={{ width: 250, height:235}}>
         <Row gutter={[0, 30]}>
-          <DatePicker placeholder={'Entry Date'} style={{width: 250}}/>
+          <DatePicker placeholder={'Entry Date'} style={{width: 250}}
+          onChange={event => { this.props.handleChange(event, 'entryDate')}}
+          />
         </Row>
         <Row gutter={[0, 20]}>
           <Input placeholder={'Instrument'} onChange={
@@ -21,7 +23,9 @@ class GeneralTradeData extends React.Component {
             }/>
         </Row>
         <Row gutter={[0, 10]}>
-          <Input placeholder={'setup'} />
+          <Input placeholder={'setup'} onChange={
+            event => { this.props.handleChange(event, 'setup'); }
+          }/>
         </Row>
         <Row gutter={[0, -10]}>
           <Switch style={{width: 300}}

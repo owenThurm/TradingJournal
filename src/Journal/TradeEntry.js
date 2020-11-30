@@ -3,6 +3,8 @@ import { Card, Input, Row } from 'antd';
 
 class TradeEntry extends React.Component {
 
+
+
   render() {
     return(
       <Card title='Trade Entry' style={{ width: 250, height: 235 }}>

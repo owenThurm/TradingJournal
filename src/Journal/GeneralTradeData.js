@@ -36,8 +36,6 @@ class GeneralTradeData extends React.Component {
       </Card>
     )
   }
-
-
 }
 
 export default GeneralTradeData;

@@ -2,34 +2,39 @@ import React from 'react';
 import { Modal, Button, Input } from 'antd';
 import { Table, Tag, Space } from 'antd';
 import AddTrade from './AddTrade';
-import axios from "axios";
+import axios from 'axios';
 
 class Journal extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      username: 'sabine',
+      trades: []
+    }
     this.dataSource = [
       {
-        key: '1',
-        tradeNum: 1,
-        instrument: 'EURUSD',
-        strategy: 'Break and Restest',
-        buyOrSell: 'Buy',
-        quantity: 1.0,
-        entry: 1.18,
-        exit: 1.80,
-        takeProfit: 1.80,
-        stopLoss: 1.01,
-        riskPercentage: 2,
-        fees: 0,
-        gain: 120,
-        hitOrigTP: 'YES',
+        key: 1,
+        tradeNum: 5,
+        instrument: null,
+        strategy: null,
+        buyOrSell: null,
+        quantity: null,
+        entry: null,
+        exit: null,
+        takeProfit: null,
+        stopLoss: null,
+        riskPercentage: null,
+        fees: null,
+        gain: null,
+        hitOrigTP: null,
       },
       {
         key: '2',
         name: 'John',
         age: 42,
         address: '10 Downing Street',
+        tradeNum: 6
       },
     ];
 
@@ -86,23 +91,38 @@ class Journal extends React.Component {
         title: 'Original TP Hit',
         dataIndex: 'hitOrigTP',
       },
-      
-    ]; 
-
-
+    ];
   }
 
   componentDidMount = () => {
-
-
-    axios.get("/getAll").then(response => {
-      console.log(response);
+    axios.get('/'+this.state.username).then(response => {
+      var trader = response.data.tradesman[0];
+      var i = 1;
+      var trades = trader.trades.map(trade => {
+        return {
+          key: i,
+          tradeNum: i++,
+          instrument: trade.instrument,
+          strategy: trade.setup,
+          buyOrSell: '???',
+          quantity: trade.quantity,
+          entry: trade.entryPrice,
+          exit: trade.exitPrice,
+          takeProfit: trade.takeProfit,
+          stopLoss: trade.stopLoss,
+          riskPercentage: '???',
+          fees: trade.fees,
+          gain: '???',
+          hitOrigTP: '???'
+        }
+      });
+      this.setState({
+        trades: trades
+      });
     }).catch(err => {
       console.log(err);
     });
-    
-
-  };
+  }
 
 
   render() {
@@ -111,7 +131,7 @@ class Journal extends React.Component {
         <p>Journal</p>
         <AddTrade />
         <br/>
-        <Table dataSource={this.dataSource} columns={this.columns} />
+        <Table dataSource={this.state.trades} columns={this.columns} />
       </div>
     )
   }

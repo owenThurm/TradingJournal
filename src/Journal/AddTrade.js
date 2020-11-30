@@ -9,20 +9,18 @@ class AddTrade extends React.Component {
     super(props);
     this.state = {
       visible: false,
-      newTrade: {
-        instrument: null,
-        strategy: null,
-        buyOrSell: null,
-        quantity: null,
-        entryPrice: null,
-        risk: null,
-        takeProfitPrice: null,
-        stopLossPrice: null,
-        exitPrice: null,
-        fees: null,
-        originalTakeProfitHit: null,
-        gainOrLoss: null
-      }
+      entryDate: null,
+      instrument: null,
+      buyOrSell: null,
+      entryPrice: null,
+      quantity: null,
+      stopLoss: null,
+      takeProfit: null,
+      exitDate: null,
+      exitPrice: null,
+      profit: null,
+      fees: null,
+      comments: null,
     };
   }
 
@@ -35,6 +33,7 @@ class AddTrade extends React.Component {
   handleSubmitTrade = () => {
     //TODO: POST axios request to our express api.
     //access trade info via state.
+
 
 
     this.setState({

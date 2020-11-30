@@ -43,8 +43,6 @@ function updateBalance(name, update) {
   if(result.error) Promise.reject(result.error);
   else return traders.findOneAndUpdate({username: name},
     { $set: { balance: update.balance } });
-
-
 }
 
 async function addTrade(name, trade) {
@@ -59,20 +57,6 @@ async function addTrade(name, trade) {
 
     return traders.findOneAndUpdate({username: name},
       { $set: { trades: newTradeList } });
-
-
-    /*
-    getTrader(name).then(response => {
-      var newTradeList = response.trades ? response.trades.push(trade) : [trade];
-      console.log(newTradeList);
-      return traders.findOneAndUpdate({username: name},
-        { $set: { trades: newTradeList } });
-    }).catch(err => {
-      console.log(err);
-    });
-    */
-
-
   }
 }
 

@@ -15,7 +15,6 @@ class Journal extends React.Component {
     this.dataSource = [
       {
         key: 1,
-        tradeNum: 5,
         instrument: null,
         strategy: null,
         buyOrSell: null,
@@ -41,7 +40,7 @@ class Journal extends React.Component {
     this.columns =  [
       {
         title: '#',
-        dataIndex: 'tradeNum',
+        dataIndex: 'key',
       },
       {
         title: 'Instrument',
@@ -100,8 +99,7 @@ class Journal extends React.Component {
       var i = 1;
       var trades = trader.trades.map(trade => {
         return {
-          key: i,
-          tradeNum: i++,
+          key: i++,
           instrument: trade.instrument,
           strategy: trade.setup,
           buyOrSell: trade.buyOrSell,

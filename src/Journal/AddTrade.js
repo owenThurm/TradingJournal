@@ -57,10 +57,68 @@ class AddTrade extends React.Component {
 
   setUpdate = (type, value) => {
     switch(type) {
+      case 'entryDate':
+        this.setState({
+          entryDate: value
+        });
+        break;
       case 'instrument':
         this.setState({
           instrument: value
         });
+        break;
+      case 'buyOrSell':
+        this.setState({
+          buyOrSell: value
+        });
+        break;
+      case 'entryPrice':
+        this.setState({
+          entryPrice: value
+        });
+        break;
+      case 'quantity':
+        this.setState({
+          quantity: value
+        });
+        break;
+      case 'stopLoss':
+        this.setState({
+          stopLoss: value
+        });
+        break;
+      case 'takeProfit':
+        this.setState({
+          takeProfit: value
+        });
+        break;
+      case 'exitDate':
+        this.setState({
+          exitDate: value
+        });
+        break;
+      case 'exitPrice':
+        this.setState({
+          exitPrice: value
+        });
+        break;
+      case 'profit':
+        this.setState({
+          profit: value
+        });
+        break;
+      case 'fees':
+        this.setState({
+          fees: value
+        });
+        break;
+      case 'comments':
+        this.setState({
+          comments: value
+        });
+        break;
+      default:
+        console.log('Invalid input type:' + type);
     }
   }
 

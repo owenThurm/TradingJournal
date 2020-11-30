@@ -4,9 +4,7 @@ const bodyParser = require('body-parser');
 
 const app = Express();
 const port = 5000;
-
 app.use(bodyParser.json());
-
 
 //GET ALL TRADERS
 app.get('/getAll', async (req, res) => {
@@ -60,8 +58,8 @@ app.put('/:username/balance', (req, res) => {
   });
 });
 
-//UPDATE TRADER TRADES
-app.put('/:username/trade', (req, res) => {
+//ADD TRADE TO TRADER
+app.post('/:username/trade', (req, res) => {
   var trade = req.body;
   var username = req.params.username;
 

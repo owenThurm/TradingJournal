@@ -69,29 +69,39 @@ class Journal extends React.Component {
   }
 
   componentDidMount = () => {
+    this.refreshTrades();
+  }
+
+  refreshTrades = () => {
     axios.get('/'+this.state.username).then(response => {
+      console.log(response);
       var trader = response.data.trader[0];
-      var i = 1;
-      var trades = trader.trades.map(trade => {
-        return {
-          key: i++,
-          instrument: trade.instrument,
-          strategy: trade.setup,
-          buyOrSell: trade.buyOrSell,
-          quantity: trade.quantity,
-          entry: trade.entryPrice,
-          exit: trade.exitPrice,
-          takeProfit: trade.takeProfit,
-          stopLoss: trade.stopLoss,
-          riskPercentage: '???',
-          fees: trade.fees,
-          gain: '???',
-          hitOrigTP: '???'
-        }
-      });
+      if(trader.trades) {
+        var trades = trader.trades.map(trade => {
+          return {
+            key: trade.tradeID,
+            instrument: trade.instrument,
+            strategy: trade.setup,
+            buyOrSell: trade.buyOrSell ? 'BUY' : 'SELL',
+            quantity: trade.quantity,
+            entry: trade.entryPrice,
+            exit: trade.exitPrice,
+            takeProfit: trade.takeProfit,
+            stopLoss: trade.stopLoss,
+            riskPercentage: '???',
+            fees: trade.fees,
+            gain: '???',
+            hitOrigTP: '???'
+          }
+        });
+      }
+      console.log(trades);
+      console.log(this.state);
       this.setState({
         trades: trades
       });
+      console.log('state set');
+      console.log(this.state);
     }).catch(err => {
       console.log(err);
     });
@@ -102,9 +112,12 @@ class Journal extends React.Component {
     return(
       <div style={{margin: "20px"}}>
         <p>Journal</p>
-        <AddTrade />
+        <AddTrade onNewTrade={() => {
+          console.log('refresh trades called');
+          this.refreshTrades();
+          } }/>
         <br/>
-        <Table dataSource={this.state.trades} columns={this.columns} />
+        <Table dataSource={this.state.trades} columns={this.columns}/>
       </div>
     )
   }

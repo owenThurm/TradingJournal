@@ -14,7 +14,7 @@ const tradeSchema = Joi.object().keys({
   exitPrice: Joi.number().required(),
   profit: Joi.number().required(),
   fees: Joi.number().required(),
-  buyOrSell: Joi.string().required(),
+  buyOrSell: Joi.boolean().required(),
   comments: Joi.string()
 });
 
@@ -54,7 +54,7 @@ async function addTrade(name, trade) {
   if(result.error) return Promise.reject(result.error);
   else {
     var newTradeList = await getTrader(name).then(response => {
-      trade.tradeID = response.trades.length;
+      trade.tradeID = response[0].trades ? response[0].trades.length+1 : 1;
       return response[0].trades ? response[0].trades.concat([trade]) : [trade];
     }).catch(err => {
       console.log(err);

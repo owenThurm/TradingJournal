@@ -12,31 +12,6 @@ class Journal extends React.Component {
       username: 'sabine',
       trades: []
     }
-    this.dataSource = [
-      {
-        key: 1,
-        instrument: null,
-        strategy: null,
-        buyOrSell: null,
-        quantity: null,
-        entry: null,
-        exit: null,
-        takeProfit: null,
-        stopLoss: null,
-        riskPercentage: null,
-        fees: null,
-        gain: null,
-        hitOrigTP: null,
-      },
-      {
-        key: '2',
-        name: 'John',
-        age: 42,
-        address: '10 Downing Street',
-        tradeNum: 6
-      },
-    ];
-
     this.columns =  [
       {
         title: '#',

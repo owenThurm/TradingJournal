@@ -36,6 +36,8 @@ class AddTrade extends React.Component {
 
 
 
+
+
     this.setState({
       visible: false
     });
@@ -45,6 +47,21 @@ class AddTrade extends React.Component {
     this.setState({
       visible: false
     });
+  }
+
+  handleUpdate = (update, type) => {
+      var value = update.target.value;
+      this.setUpdate(type, value);
+      console.log(this.state);
+  }
+
+  setUpdate = (type, value) => {
+    switch(type) {
+      case 'instrument':
+        this.setState({
+          instrument: value
+        });
+    }
   }
 
   render() {
@@ -62,13 +79,13 @@ class AddTrade extends React.Component {
 
           <Row gutter={[10, 10]}  justify="center">
             <Col>
-              <GeneralTradeData />
+              <GeneralTradeData handleChange={this.handleUpdate} />
             </Col>
             <Col>
-              <TradeEntry />
+              <TradeEntry handleChange={this.handleUpdate} />
             </Col>
             <Col>
-              <TradeExit />
+              <TradeExit handleChange={this.handleUpdate} />
             </Col>
           </Row>
           <h3>Trade Comments</h3>

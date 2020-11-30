@@ -1,16 +1,17 @@
 const Express = require('express');
 const traders = require('./db/tradeModel');
 const bodyParser = require('body-parser');
+const { response } = require('express');
 
 const app = Express();
 const port = 5000;
 app.use(bodyParser.json());
 
 //GET ALL TRADERS
-app.get('/getAll', async (req, res) => {
+app.get('/', async (req, res) => {
   var trademans = await traders.getAll();
   res.json({
-    tradeMansesis: trademans
+    traders: trademans
   });
   res.end();
 });
@@ -20,7 +21,7 @@ app.get('/:username', (req, res) => {
   var username = req.params.username;
   traders.getTrader(username).then(response => {
     res.json({
-      tradesman: response
+      traders: response
     });
   }).catch(err => {
     console.log(err);
@@ -28,7 +29,7 @@ app.get('/:username', (req, res) => {
 });
 
 //CREATE TRADER
-app.post('/create', (req, res) => {
+app.post('/', (req, res) => {
 
   var aLec = req.body;
   console.log(aLec);
@@ -45,7 +46,7 @@ app.post('/create', (req, res) => {
 });
 
 //UPDATE TRADER BALANCE
-app.put('/:username/balance', (req, res) => {
+app.post('/:username/balance', (req, res) => {
   var update = req.body;
   var username = req.params.username;
   traders.updateBalance(username, update).then(response => {
@@ -87,8 +88,23 @@ app.delete('/:username', (req, res) => {
   })
 });
 
+//DELETE TRADE
+app.delete('/:username/:tradeID', (req, res) => {
+  var username = req.params.username;
+  var tradeID = req.params.tradeID;
+
+  traders.deleteTrade(username, tradeID).then(response => {
+    res.json({
+      deletedTrade: tradeID
+    });
+  }).catch(err => {
+    console.log(err);
+  });
+
+});
+
 //WARNING: DELETE EVERYONE
-app.delete('/deleteAll', (req, res) => {
+app.delete('/', (req, res) => {
   traders.deleteAll().then(response => {
     res.status(200);
     res.json({

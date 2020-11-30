@@ -16,7 +16,9 @@ class GeneralTradeData extends React.Component {
           <DatePicker placeholder={'Entry Date'} style={{width: 250}}/>
         </Row>
         <Row gutter={[0, 20]}>
-          <Input placeholder={'Instrument'} />
+          <Input placeholder={'Instrument'} onChange={
+            (event) => { this.props.handleChange(event, 'instrument'); }
+            }/>
         </Row>
         <Row gutter={[0, 10]}>
           <Input placeholder={'setup'} />

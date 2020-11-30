@@ -25,6 +25,7 @@ app.get('/:username', (req, res) => {
     });
   }).catch(err => {
     console.log(err);
+    res.json(err);
   });
 });
 
@@ -42,6 +43,7 @@ app.post('/', (req, res) => {
     res.end();
   }).catch(err => {
     console.log(err);
+    res.json(err);
   });
 });
 
@@ -56,6 +58,7 @@ app.post('/:username/balance', (req, res) => {
     });
   }).catch(err => {
     console.log('error logged: ' + err);
+    res.json(err);
   });
 });
 
@@ -71,6 +74,7 @@ app.post('/:username/trade', (req, res) => {
     });
   }).catch(err => {
     console.log(err);
+    res.json(err);
   });
 });
 
@@ -85,6 +89,7 @@ app.delete('/:username', (req, res) => {
     });
   }).catch(err => {
     console.log(err);
+    res.json(err);
   })
 });
 
@@ -99,8 +104,8 @@ app.delete('/:username/:tradeID', (req, res) => {
     });
   }).catch(err => {
     console.log(err);
+    res.json(err);
   });
-
 });
 
 //WARNING: DELETE EVERYONE
@@ -112,6 +117,7 @@ app.delete('/', (req, res) => {
     });
   }).catch(err => {
     console.log(err);
+    res.json(err);
   })
 });
 

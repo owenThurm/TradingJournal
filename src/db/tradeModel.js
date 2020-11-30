@@ -2,7 +2,7 @@ const Joi = require('@hapi/joi');
 const db = require('./connection');
 
 const tradeSchema = Joi.object().keys({
-  tradeID: Joi.number().required(),
+  tradeID: Joi.number(),
   entryDate: Joi.date().required(),
   instrument: Joi.string().required(),
   setup: Joi.string().required(),
@@ -54,6 +54,7 @@ async function addTrade(name, trade) {
   if(result.error) return Promise.reject(result.error);
   else {
     var newTradeList = await getTrader(name).then(response => {
+      trade.tradeID = response.trades.length;
       return response[0].trades ? response[0].trades.concat([trade]) : [trade];
     }).catch(err => {
       console.log(err);

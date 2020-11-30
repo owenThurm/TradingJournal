@@ -37,7 +37,9 @@ class GeneralTradeData extends React.Component {
             <div>
               Sell <CloseOutlined />
             </div>
-          } defaultChecked />
+          } defaultChecked
+          onChange={ event => { this.props.handleChange(event, 'buyOrSell'); }
+          }/>
         </Row>
       </Card>
     )

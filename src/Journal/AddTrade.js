@@ -51,9 +51,12 @@ class AddTrade extends React.Component {
   }
 
   handleUpdate = (update, type) => {
-      var value = update.target.value;
-      this.setUpdate(type, value);
-      console.log(this.state);
+    var value = null;
+    console.log(update);
+    if(typeof(update) == 'boolean') value = update;
+    else if(update._isAMomentObject) value = update._d;
+    else value = update.target.value;
+    this.setUpdate(type, value);
   }
 
   setUpdate = (type, value) => {

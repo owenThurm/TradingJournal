@@ -56,7 +56,6 @@ class AddTrade extends React.Component {
         comments: this.state.comments
       }
     }).then(response => {
-      console.log(response);
       this.setState({
         visible: false,
         entryDate: null,
@@ -169,6 +168,7 @@ class AddTrade extends React.Component {
   }
 
   render() {
+
     return(
       <div>
         <Button onClick={this.showModal.bind(this)}>

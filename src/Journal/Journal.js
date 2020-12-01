@@ -74,10 +74,10 @@ class Journal extends React.Component {
 
   refreshTrades = () => {
     axios.get('/'+this.state.username).then(response => {
-      console.log(response);
       var trader = response.data.trader[0];
       if(trader.trades) {
-        var trades = trader.trades.map(trade => {
+
+        var trades = trader.trades.reverse().map(trade => {
           return {
             key: trade.tradeID,
             instrument: trade.instrument,
@@ -95,13 +95,9 @@ class Journal extends React.Component {
           }
         });
       }
-      console.log(trades);
-      console.log(this.state);
       this.setState({
         trades: trades
       });
-      console.log('state set');
-      console.log(this.state);
     }).catch(err => {
       console.log(err);
     });
@@ -113,7 +109,6 @@ class Journal extends React.Component {
       <div style={{margin: "20px"}}>
         <p>Journal</p>
         <AddTrade onNewTrade={() => {
-          console.log('refresh trades called');
           this.refreshTrades();
           } }/>
         <br/>

@@ -9,9 +9,6 @@ class GeneralTradeData extends React.Component {
   }
 
   render() {
-
-    console.log('re-rendered general data');
-
     return(
       <Card title='General Trade Data' style={{ width: 250, height:235}}>
         <Row gutter={[0, 30]}>

@@ -1,5 +1,7 @@
 import React from 'react';
-import { Modal, Button, Input, Select, InputNumber, Row, Col, Form } from 'antd';
+import { Modal, Button, Input, Select, InputNumber,
+   Row, Col, Form, Card, DatePicker, Switch } from 'antd';
+import { CloseOutlined, CheckOutlined } from '@ant-design/icons';
 import GeneralTradeData from './GeneralTradeData';
 import TradeEntry from './TradeEntry';
 import TradeExit from './TradeExit';
@@ -24,7 +26,6 @@ class AddTrade extends React.Component {
       profit: null,
       fees: null,
       comments: null,
-      formRef: React.createRef(),
     };
   }
 
@@ -169,9 +170,6 @@ class AddTrade extends React.Component {
     }
   }
 
-  clearFields = () => {
-    this.formRef.resetFields();
-  }
 
   render() {
 
@@ -186,21 +184,93 @@ class AddTrade extends React.Component {
         onOk={this.handleSubmitTrade.bind(this, 'hello')}
         onCancel={this.handleCancel.bind(this)}
         width={820}>
-            <Row gutter={[10, 10]}  justify="center">
-              <Col>
-                  <GeneralTradeData handleChange={this.handleUpdate} />
-              </Col>
-              <Col>
-                  <TradeEntry handleChange={this.handleUpdate} />
-              </Col>
-              <Col>
-                <TradeExit handleChange={this.handleUpdate}/>
-              </Col>
-              </Row>
-              <h3>Trade Comments</h3>
-                <Input placeholder="Got stopped out should play around with stop placement."
-                onChange={ event => { this.handleUpdate(event, 'comments') }
+          <Row gutter={[10, 10]}  justify="center">
+            <Col>
+              <Card title='General Trade Data' style={{ width: 250, height:235}}>
+                <Row gutter={[0, 30]}>
+                  <DatePicker placeholder={'Entry Date'} style={{width: 250}}
+                  onChange={event => { this.handleUpdate(event, 'entryDate')}}
+                  />
+                </Row>
+                <Row gutter={[0, 20]}>
+                  <Input placeholder={'Instrument'} onChange={
+                    (event) => { this.handleUpdate(event, 'instrument'); }
+                    }/>
+                </Row>
+                <Row gutter={[0, 10]}>
+                  <Input placeholder={'setup'} onChange={
+                    event => { this.handleUpdate(event, 'setup'); }
+                  }/>
+                </Row>
+                <Row gutter={[0, -10]}>
+                  <Switch style={{width: 300}}
+                  checkedChildren={
+                  <div>
+                    Buy <CheckOutlined />
+                  </div>}
+                  unCheckedChildren={
+                    <div>
+                      Sell <CloseOutlined />
+                    </div>
+                  } defaultChecked
+                  onChange={ event => { this.handleUpdate(event, 'buyOrSell'); }
+                  }/>
+                </Row>
+              </Card>
+            </Col>
+            <Col>
+              <Card title='Trade Entry' style={{ width: 250, height: 235 }}>
+                <Row gutter={[0, 30]}>
+                  <Input placeholder={'Entry Price'}
+                  onChange={ event => { this.handleUpdate(event, 'entryPrice') }
+                  }/>
+                </Row>
+                <Row gutter={[0, 20]}>
+                  <Input placeholder={'Quantity'}
+                  onChange={ event => { this.handleUpdate(event, 'quantity') }
+                  }/>
+                </Row>
+                <Row gutter={[0,10]}>
+                  <Input placeholder={'Stop Loss'}
+                  onChange={ event => { this.handleUpdate(event, 'stopLoss') }
+                  }/>
+                </Row>
+                <Row gutter={[0,0]}>
+                  <Input placeholder={'Take Profit'}
+                  onChange={ event => { this.handleUpdate(event, 'takeProfit') }
+                  }/>
+                </Row>
+              </Card>
+            </Col>
+            <Col>
+              <Card title='Trade Exit' style={{ width: 250, height: 235}}>
+                <Row gutter={[0, 30]}>
+                  <DatePicker placeholder={'Exit Date'} style={{width:300}}
+                  onChange={ event => { this.handleUpdate(event, 'exitDate') }
                 }/>
+                </Row>
+                <Row gutter={[0, 20]}>
+                  <Input placeholder={'Exit Price'}
+                  onChange={ event => { this.handleUpdate(event, 'exitPrice') }
+                  }/>
+                </Row>
+                <Row gutter={[0,10]}>
+                  <Input placeholder={'Proft/Loss'}
+                  onChange={ event => { this.handleUpdate(event, 'profit') }
+                  }/>
+                </Row>
+                <Row gutter={[0,0]}>
+                  <Input placeholder={'Fees'}
+                  onChange={ event => { this.handleUpdate(event, 'fees') }
+                  }/>
+                </Row>
+              </Card>
+            </Col>
+          </Row>
+          <h3>Trade Comments</h3>
+          <Input placeholder="Got stopped out should play around with stop placement."
+          onChange={ event => { this.handleUpdate(event, 'comments') }
+          }/>
         </Modal>
       </div>
     )

@@ -3,6 +3,7 @@ import { Modal, Button, Input } from 'antd';
 import { Table, Tag, Space } from 'antd';
 import AddTrade from './AddTrade';
 import axios from 'axios';
+import FormTest from './FormTest';
 
 class Journal extends React.Component {
 
@@ -113,6 +114,7 @@ class Journal extends React.Component {
           } }/>
         <br/>
         <Table dataSource={this.state.trades} columns={this.columns}/>
+        <FormTest />
       </div>
     )
   }

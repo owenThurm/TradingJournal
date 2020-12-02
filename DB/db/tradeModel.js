@@ -15,7 +15,7 @@ const tradeSchema = Joi.object().keys({
   profit: Joi.number().required(),
   fees: Joi.number().required(),
   buyOrSell: Joi.boolean().required(),
-  comments: Joi.string()
+  comments: Joi.string().allow(null).allow('')
 });
 
 

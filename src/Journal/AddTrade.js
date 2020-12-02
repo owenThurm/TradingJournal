@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, Button, Input, Select, InputNumber, Row, Col } from 'antd';
+import { Modal, Button, Input, Select, InputNumber, Row, Col, Form } from 'antd';
 import GeneralTradeData from './GeneralTradeData';
 import TradeEntry from './TradeEntry';
 import TradeExit from './TradeExit';
@@ -24,6 +24,7 @@ class AddTrade extends React.Component {
       profit: null,
       fees: null,
       comments: null,
+      formRef: React.createRef(),
     };
   }
 
@@ -53,7 +54,7 @@ class AddTrade extends React.Component {
         profit: this.state.profit,
         fees: this.state.fees,
         buyOrSell: this.state.buyOrSell,
-        comments: this.state.comments
+        comments: this.state.comments ? this.state.comments : ""
       }
     }).then(response => {
       this.setState({
@@ -73,6 +74,7 @@ class AddTrade extends React.Component {
         comments: null,
       });
       this.props.onNewTrade();
+      this.clearFields();
     }).catch(err => {
       console.log('ERR: ' + err);
     });
@@ -167,6 +169,10 @@ class AddTrade extends React.Component {
     }
   }
 
+  clearFields = () => {
+    this.formRef.resetFields();
+  }
+
   render() {
 
     return(
@@ -180,22 +186,21 @@ class AddTrade extends React.Component {
         onOk={this.handleSubmitTrade.bind(this, 'hello')}
         onCancel={this.handleCancel.bind(this)}
         width={820}>
-
-          <Row gutter={[10, 10]}  justify="center">
-            <Col>
-              <GeneralTradeData handleChange={this.handleUpdate} />
-            </Col>
-            <Col>
-              <TradeEntry handleChange={this.handleUpdate} />
-            </Col>
-            <Col>
-              <TradeExit handleChange={this.handleUpdate} />
-            </Col>
-          </Row>
-          <h3>Trade Comments</h3>
-          <Input placeholder="Got stopped out should play around with stop placement."
-          onChange={ event => { this.handleUpdate(event, 'comments') }
-          }/>
+            <Row gutter={[10, 10]}  justify="center">
+              <Col>
+                  <GeneralTradeData handleChange={this.handleUpdate} />
+              </Col>
+              <Col>
+                  <TradeEntry handleChange={this.handleUpdate} />
+              </Col>
+              <Col>
+                <TradeExit handleChange={this.handleUpdate}/>
+              </Col>
+              </Row>
+              <h3>Trade Comments</h3>
+                <Input placeholder="Got stopped out should play around with stop placement."
+                onChange={ event => { this.handleUpdate(event, 'comments') }
+                }/>
         </Modal>
       </div>
     )

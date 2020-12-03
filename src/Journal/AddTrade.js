@@ -179,6 +179,11 @@ class AddTrade extends React.Component {
     }
   }
 
+  checkNumber = (rule, value) => {
+    if(isNaN(value)) return Promise.reject();
+    else return Promise.resolve();
+  }
+
 
   render() {
 
@@ -252,8 +257,8 @@ class AddTrade extends React.Component {
                   <Row gutter={[0, 30]}>
                   <Form.Item name="entryPrice" rules={[{
                         required: true,
-                        type: 'number',
-                        message: 'Input value for Entry Price!'
+                        message: 'Input value for Entry Price!',
+                        validator: this.checkNumber
                         }]} style={{width: 500, marginBottom: 0 }}>
                     <Input placeholder={'Entry Price'}
                     onChange={ event => { this.handleUpdate(event, 'entryPrice') }
@@ -264,7 +269,7 @@ class AddTrade extends React.Component {
                       <Form.Item name="quantity" rules={[{
                         required: true,
                         message: 'Input value for Quantity!',
-                        type: 'number'
+                        validator: this.checkNumber
                         }]} style={{width: 500, marginBottom: 0 }}>
                     <Input placeholder={'Quantity'}
                     onChange={ event => { this.handleUpdate(event, 'quantity') }
@@ -275,7 +280,7 @@ class AddTrade extends React.Component {
                   <Form.Item name="stopLoss" rules={[{
                         required: true,
                         message: 'Input value for Stop Loss!',
-                        type: 'number'
+                        validator: this.checkNumber
                         }]} style={{width: 500, marginBottom: 0 }}>
                     <Input placeholder={'Stop Loss'}
                     onChange={ event => { this.handleUpdate(event, 'stopLoss') }
@@ -286,7 +291,7 @@ class AddTrade extends React.Component {
                   <Form.Item name="takeProfit" rules={[{
                         required: true,
                         message: 'Input value for Take Profit!',
-                        type: 'number'
+                        validator: this.checkNumber
                         }]} style={{width: 500, marginBottom: 0 }}>
                     <Input placeholder={'Take Profit'}
                     onChange={ event => { this.handleUpdate(event, 'takeProfit') }
@@ -298,7 +303,7 @@ class AddTrade extends React.Component {
               <Col>
                 <Card title='Trade Exit' style={{ width: 250, height: 235}}>
                   <Row gutter={[0, 30]}>
-                    <Form.Item name="entryDate" rules={[{
+                    <Form.Item name="exitDate" rules={[{
                           required: true,
                           message: 'Entry Date Required!'
                           }]} style={{width: 500, marginBottom: 0 }}>
@@ -311,7 +316,7 @@ class AddTrade extends React.Component {
                   <Form.Item name="exitPrice" rules={[{
                         required: true,
                         message: 'Input value for Exit Price!',
-                        type: 'number'
+                        validator: this.checkNumber
                         }]} style={{width: 500, marginBottom: 0 }}>
                     <Input placeholder={'Exit Price'}
                     onChange={ event => { this.handleUpdate(event, 'exitPrice') }
@@ -322,7 +327,7 @@ class AddTrade extends React.Component {
                   <Form.Item name="profit" rules={[{
                         required: true,
                         message: 'Input value for Profit!',
-                        type: 'number'
+                        validator: this.checkNumber
                         }]} style={{width: 500, marginBottom: 0 }}>
                     <Input placeholder={'Proft/Loss'}
                     onChange={ event => { this.handleUpdate(event, 'profit') }
@@ -333,7 +338,7 @@ class AddTrade extends React.Component {
                   <Form.Item name="fees" rules={[{
                         required: true,
                         message: 'Input value for fees!',
-                        type: 'number'
+                        validator: this.checkNumber
                         }]} style={{width: 500, marginBottom: 0 }}>
                     <Input placeholder={'Fees'}
                     onChange={ event => { this.handleUpdate(event, 'fees') }

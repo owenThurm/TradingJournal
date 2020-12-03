@@ -114,7 +114,6 @@ class Journal extends React.Component {
           } }/>
         <br/>
         <Table dataSource={this.state.trades} columns={this.columns}/>
-        <FormTest />
       </div>
     )
   }

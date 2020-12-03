@@ -10,7 +10,6 @@ import axios from 'axios';
 class AddTrade extends React.Component {
   formRef = React.createRef();
 
-
   constructor(props) {
     super(props);
     this.state = {
@@ -237,8 +236,8 @@ class AddTrade extends React.Component {
                   <Row gutter={[0, 10]}>
                     <Form.Item name="setup" rules={[{
                         required: true,
-                        message: 'Input a description for Instrument!'
-                        }]}>
+                        message: 'Input a description for Setup!'
+                        }]} style={{width: 500, marginBottom: 0 }}>
                         <Input placeholder={'setup'} onChange={
                           event => { this.handleUpdate(event, 'setup'); }
                         }/>
@@ -265,8 +264,9 @@ class AddTrade extends React.Component {
                   <Row gutter={[0, 30]}>
                   <Form.Item name="entryPrice" rules={[{
                         required: true,
-                        message: 'Input a description for Instrument!'
-                        }]}>
+                        type: 'number',
+                        message: 'Input a value for Entry Price!'
+                        }]} style={{width: 500, marginBottom: 0 }}>
                     <Input placeholder={'Entry Price'}
                     onChange={ event => { this.handleUpdate(event, 'entryPrice') }
                     }/>
@@ -275,8 +275,9 @@ class AddTrade extends React.Component {
                   <Row gutter={[0, 20]}>
                       <Form.Item name="quantity" rules={[{
                         required: true,
-                        message: 'Input a description for Instrument!'
-                        }]}>
+                        message: 'Input a value for Quantity!',
+                        type: 'number'
+                        }]} style={{width: 500, marginBottom: 0 }}>
                     <Input placeholder={'Quantity'}
                     onChange={ event => { this.handleUpdate(event, 'quantity') }
                     }/>
@@ -285,8 +286,9 @@ class AddTrade extends React.Component {
                   <Row gutter={[0,10]}>
                   <Form.Item name="stopLoss" rules={[{
                         required: true,
-                        message: 'Input a description for Instrument!'
-                        }]}>
+                        message: 'Input a value for Stop Loss!',
+                        type: 'number'
+                        }]} style={{width: 500, marginBottom: 0 }}>
                     <Input placeholder={'Stop Loss'}
                     onChange={ event => { this.handleUpdate(event, 'stopLoss') }
                     }/>
@@ -295,8 +297,9 @@ class AddTrade extends React.Component {
                   <Row gutter={[0,0]}>
                   <Form.Item name="takeProfit" rules={[{
                         required: true,
-                        message: 'Input a description for Instrument!'
-                        }]}>
+                        message: 'Input a value for Take Profit!',
+                        type: 'number'
+                        }]} style={{width: 500, marginBottom: 0 }}>
                     <Input placeholder={'Take Profit'}
                     onChange={ event => { this.handleUpdate(event, 'takeProfit') }
                     }/>
@@ -314,8 +317,9 @@ class AddTrade extends React.Component {
                   <Row gutter={[0, 20]}>
                   <Form.Item name="exitPrice" rules={[{
                         required: true,
-                        message: 'Input a description for Instrument!'
-                        }]}>
+                        message: 'Input a value for Exit Price!',
+                        type: 'number'
+                        }]} style={{width: 500, marginBottom: 0 }}>
                     <Input placeholder={'Exit Price'}
                     onChange={ event => { this.handleUpdate(event, 'exitPrice') }
                     }/>
@@ -324,8 +328,9 @@ class AddTrade extends React.Component {
                   <Row gutter={[0,10]}>
                   <Form.Item name="profit" rules={[{
                         required: true,
-                        message: 'Input a description for Instrument!'
-                        }]}>
+                        message: 'Input a value for Profit!',
+                        type: 'number'
+                        }]} style={{width: 500, marginBottom: 0 }}>
                     <Input placeholder={'Proft/Loss'}
                     onChange={ event => { this.handleUpdate(event, 'profit') }
                     }/>
@@ -334,8 +339,9 @@ class AddTrade extends React.Component {
                   <Row gutter={[0,0]}>
                   <Form.Item name="fees" rules={[{
                         required: true,
-                        message: 'Input a description for Instrument!'
-                        }]}>
+                        message: 'Input a description for Instrument!',
+                        type: 'number'
+                        }]} style={{width: 500, marginBottom: 0 }}>
                     <Input placeholder={'Fees'}
                     onChange={ event => { this.handleUpdate(event, 'fees') }
                     }/>
@@ -345,9 +351,13 @@ class AddTrade extends React.Component {
               </Col>
             </Row>
             <h3>Trade Comments</h3>
-            <Input placeholder="Got stopped out should play around with stop placement."
-            onChange={ event => { this.handleUpdate(event, 'comments') }
-            }/>
+            <Form.Item name="comments" rules={[{
+              required: false
+            }]} style={{width: 770, marginBottom: 0 }}>
+              <Input placeholder="Got stopped out should play around with stop placement."
+              onChange={ event => { this.handleUpdate(event, 'comments') }
+              }/>
+            </Form.Item>
           </Form>
         </Modal>
       </div>

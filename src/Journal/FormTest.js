@@ -1,79 +1,42 @@
-import { Form, Input, Button, Checkbox } from 'antd';
-const layout = {
-  labelCol: {
-    span: 8,
-  },
-  wrapperCol: {
-    span: 16,
-  },
-};
-const tailLayout = {
-  wrapperCol: {
-    offset: 8,
-    span: 16,
-  },
-};
+import { Form, Input, Button, Modal } from 'antd';
+import React from 'react';
 
-const Demo = () => {
-  const [form] = Form.useForm();
+class Demo extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      visible: false
+     };
+  }
 
-  const onFinish = (values) => {
-    console.log('Success:', values);
-    form.resetFields();
-    console.log(form);
-  };
+  formRef = React.createRef();
 
-  const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo);
-  };
+  function1 = () => {
+    console.log(this.formRef);
+  }
 
-  return (
-    <Form form={form}
-      {...layout}
-      name="basic"
-      initialValues={{
-        remember: true,
-      }}
-      onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
-    >
-      <Form.Item
-        label="Username"
-        name="username"
-        rules={[
-          {
-            required: true,
-            message: 'Please input your username!',
-          },
-        ]}
-      >
-        <Input />
-      </Form.Item>
+  render() {
+    return (
+      <div>
+        <Modal visible={this.state.visible} onOk={this.function1.bind(this)}>
+          <Form ref={this.formRef}>
+            <Form.Item name="usernamesss" rules={[{
+                        required: true,
+                        message: 'Input a description for Instrument!'
+                        }]}>
+              <Input />
+            </Form.Item>
+            <Input />
+          </Form>
+        </Modal>
 
-      <Form.Item
-        label="Password"
-        name="password"
-        rules={[
-          {
-            required: true,
-            message: 'Please input your password!',
-          },
-        ]}
-      >
-        <Input.Password />
-      </Form.Item>
+        <button onClick={event => this.setState({visible: true})}>
+          click
+        </button>
 
-      <Form.Item {...tailLayout} name="remember" valuePropName="checked">
-        <Checkbox>Remember me</Checkbox>
-      </Form.Item>
-
-      <Form.Item {...tailLayout}>
-        <Button type="primary" htmlType="submit">
-          Submit
-        </Button>
-      </Form.Item>
-    </Form>
-  );
-};
+      </div>
+    );
+  }
+}
 
 export default Demo;

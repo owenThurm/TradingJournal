@@ -179,14 +179,6 @@ class AddTrade extends React.Component {
     }
   }
 
-  ADatePicker = () => {
-      return(
-        <div>
-          <DatePicker />
-        </div>
-      );
-  }
-
 
   render() {
 
@@ -204,28 +196,24 @@ class AddTrade extends React.Component {
         onCancel={this.handleCancel.bind(this)}
         width={820}>
           <Form ref={this.formRef} >
-            <Row gutter={[10, 10]}  justify="center">
+            <Row gutter={[10, 45]}  justify="center">
               <Col>
                 <Card title='General Trade Data' style={{ width: 250, height:235}}>
-                  <Row gutter={[0, 30]}>
+                  <Row gutter={[0, 20]}>
 
-                    {/*}
-                    <Form.item>
-                    { getFieldDecorator('date_1', {}) (<DatePicker format={'DD/MM/YYYY'} /> )}
-                    </Form.item>
-                    */}
-
-
-
-                    <DatePicker placeholder={'Entry Date'} style={{width: 250}}
-                    onChange={event => { this.handleUpdate(event, 'entryDate')}}
-                    />
-
+                    <Form.Item name="entryDate" rules={[{
+                        required: true,
+                        message: 'Entry Date Required!'
+                        }]} style={{width: 500, marginBottom: 0 }}>
+                      <DatePicker placeholder={'Entry Date'} style={{width: 200}}
+                      onChange={event => { this.handleUpdate(event, 'entryDate')}}
+                      />
+                    </Form.Item>
                   </Row>
                   <Row gutter={[0, 20]}>
                     <Form.Item name="Instrument" rules={[{
                       required: true,
-                      message: 'Input a description for Instrument!'
+                      message: 'Input type of Instrument!'
                       }]}
                       style={{width: 500, marginBottom: 0 }}>
                       <Input placeholder={'Instrument'} onChange={
@@ -236,7 +224,7 @@ class AddTrade extends React.Component {
                   <Row gutter={[0, 10]}>
                     <Form.Item name="setup" rules={[{
                         required: true,
-                        message: 'Input a description for Setup!'
+                        message: 'Input description for Setup!'
                         }]} style={{width: 500, marginBottom: 0 }}>
                         <Input placeholder={'setup'} onChange={
                           event => { this.handleUpdate(event, 'setup'); }
@@ -265,7 +253,7 @@ class AddTrade extends React.Component {
                   <Form.Item name="entryPrice" rules={[{
                         required: true,
                         type: 'number',
-                        message: 'Input a value for Entry Price!'
+                        message: 'Input value for Entry Price!'
                         }]} style={{width: 500, marginBottom: 0 }}>
                     <Input placeholder={'Entry Price'}
                     onChange={ event => { this.handleUpdate(event, 'entryPrice') }
@@ -275,7 +263,7 @@ class AddTrade extends React.Component {
                   <Row gutter={[0, 20]}>
                       <Form.Item name="quantity" rules={[{
                         required: true,
-                        message: 'Input a value for Quantity!',
+                        message: 'Input value for Quantity!',
                         type: 'number'
                         }]} style={{width: 500, marginBottom: 0 }}>
                     <Input placeholder={'Quantity'}
@@ -286,7 +274,7 @@ class AddTrade extends React.Component {
                   <Row gutter={[0,10]}>
                   <Form.Item name="stopLoss" rules={[{
                         required: true,
-                        message: 'Input a value for Stop Loss!',
+                        message: 'Input value for Stop Loss!',
                         type: 'number'
                         }]} style={{width: 500, marginBottom: 0 }}>
                     <Input placeholder={'Stop Loss'}
@@ -297,7 +285,7 @@ class AddTrade extends React.Component {
                   <Row gutter={[0,0]}>
                   <Form.Item name="takeProfit" rules={[{
                         required: true,
-                        message: 'Input a value for Take Profit!',
+                        message: 'Input value for Take Profit!',
                         type: 'number'
                         }]} style={{width: 500, marginBottom: 0 }}>
                     <Input placeholder={'Take Profit'}
@@ -310,14 +298,19 @@ class AddTrade extends React.Component {
               <Col>
                 <Card title='Trade Exit' style={{ width: 250, height: 235}}>
                   <Row gutter={[0, 30]}>
-                    <DatePicker placeholder={'Exit Date'} style={{width:300}}
-                    onChange={ event => { this.handleUpdate(event, 'exitDate') }
-                  }/>
+                    <Form.Item name="entryDate" rules={[{
+                          required: true,
+                          message: 'Entry Date Required!'
+                          }]} style={{width: 500, marginBottom: 0 }}>
+                        <DatePicker placeholder={'Exit Date'} style={{width:200}}
+                        onChange={ event => { this.handleUpdate(event, 'exitDate') }
+                      }/>
+                    </Form.Item>
                   </Row>
                   <Row gutter={[0, 20]}>
                   <Form.Item name="exitPrice" rules={[{
                         required: true,
-                        message: 'Input a value for Exit Price!',
+                        message: 'Input value for Exit Price!',
                         type: 'number'
                         }]} style={{width: 500, marginBottom: 0 }}>
                     <Input placeholder={'Exit Price'}
@@ -328,7 +321,7 @@ class AddTrade extends React.Component {
                   <Row gutter={[0,10]}>
                   <Form.Item name="profit" rules={[{
                         required: true,
-                        message: 'Input a value for Profit!',
+                        message: 'Input value for Profit!',
                         type: 'number'
                         }]} style={{width: 500, marginBottom: 0 }}>
                     <Input placeholder={'Proft/Loss'}
@@ -339,7 +332,7 @@ class AddTrade extends React.Component {
                   <Row gutter={[0,0]}>
                   <Form.Item name="fees" rules={[{
                         required: true,
-                        message: 'Input a description for Instrument!',
+                        message: 'Input value for fees!',
                         type: 'number'
                         }]} style={{width: 500, marginBottom: 0 }}>
                     <Input placeholder={'Fees'}

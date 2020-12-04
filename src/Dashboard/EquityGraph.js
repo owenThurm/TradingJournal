@@ -20,6 +20,8 @@ class EquityGraph extends React.Component {
 
     var trader = await axios.get('/' + this.state.username);
     var trades = trader.data.trader[0].trades;
+    console.log("trades");
+    console.log(trades);
 
 
     //For every new date ->
@@ -28,31 +30,36 @@ class EquityGraph extends React.Component {
     //push the sum into the equity.
     var latestDate = 0;
     var dailySum = trader.data.trader[0].balance;
+    var equityList = this.state.equity;
+    equityList.push(dailySum)
+    var labelList = this.state.labels;
+    labelList.push(trades[0].entryDate)
 
     console.log(trader);
 
     for(var i=0; i<trades.length; i++) {
+      // console.log("dailySum");
+      // console.log(dailySum);
       var trade = trades[i];
       console.log(trade);
       console.log(trades);
+      dailySum += parseInt(trade.profit);
       if(this.mapDate(trade.exitDate) > latestDate) {
 
-        var labelList = this.state.labels;
         labelList.push(trade.exitDate.slice(0,10));
-
-        var equityList = this.state.equity;
         equityList.push(dailySum);
-
-        this.setState({
-          labels: labelList,
-          equity: equityList
-        });
         latestDate = this.mapDate(trade.exitDate.slice(0,10));
-        dailySum += parseInt(trade.profit);
+        
       } else {
-        dailySum+= parseInt(trade.profit);
+        equityList.pop();
+        equityList.push(dailySum);
       }
     }
+
+    this.setState({
+      labels: labelList,
+      equity: equityList
+    });
 
     console.log(this.state);
 

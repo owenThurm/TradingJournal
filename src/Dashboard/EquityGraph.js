@@ -1,25 +1,60 @@
 import React from 'react';
 import { Chart } from 'chart.js';
+import axios from 'axios';
+//import { mapDate } from '../utils';
 
 class EquityGraph extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       username: 'Alec',
-      equity: [10, 500, 100, 56, 47, 88, 130],
+      equity: [],
       //Exit dates of trades
-      labels: ['10-1-20', '10-2-20'],
+      labels: [],
 
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     //Axios Get Trades -> set state
 
+    var trader = await axios.get('/' + this.state.username);
+    var trades = trader.data.trader[0].trades;
+
+
     //For every new date ->
-    //store date in labels,
+    //store date in labels, if not already stored
     //sum the gain/loss over that date,
     //push the sum into the equity.
+    var latestDate = 0;
+    var dailySum = trader.data.trader[0].balance;
+
+    console.log(trader);
+
+    for(var i=0; i<trades.length; i++) {
+      var trade = trades[i];
+      console.log(trade);
+      console.log(trades);
+      if(this.mapDate(trade.exitDate) > latestDate) {
+
+        var labelList = this.state.labels;
+        labelList.push(trade.exitDate.slice(0,10));
+
+        var equityList = this.state.equity;
+        equityList.push(dailySum);
+
+        this.setState({
+          labels: labelList,
+          equity: equityList
+        });
+        latestDate = this.mapDate(trade.exitDate.slice(0,10));
+        dailySum += parseInt(trade.profit);
+      } else {
+        dailySum+= parseInt(trade.profit);
+      }
+    }
+
+    console.log(this.state);
 
     var ctx = document.getElementById('myChart').getContext('2d');
     var myChart = new Chart(ctx, {
@@ -37,6 +72,12 @@ class EquityGraph extends React.Component {
       },
     });
 
+  }
+
+  //Maps dates to integers
+  mapDate = (date) => {
+    var dateList = date.slice(0,10).split('-');
+    return dateList[0] * 365 + dateList[1] * 30 + dateList[2];
   }
 
 

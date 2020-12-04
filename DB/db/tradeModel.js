@@ -85,12 +85,6 @@ function insertion(trade, tradeList) {
   return tradeList;
 }
 
-//Maps dates to integers
-function mapDate(date) {
-  var dateList = date.slice(0,10).split('-');
-  return dateList[0] * 365 + dateList[1] * 30 + dateList[2];
-}
-
 async function deleteTrade(name, tradeID) {
   var newTradeList = await getTrader(name).then(response => {
     var newList = [];
@@ -103,6 +97,12 @@ async function deleteTrade(name, tradeID) {
   })
   return traders.findOneAndUpdate({username: name},
     {$set: {trades: newTradeList } });
+}
+
+//Maps dates to integers
+function mapDate(date) {
+  var dateList = date.slice(0,10).split('-');
+  return dateList[0] * 365 + dateList[1] * 30 + dateList[2];
 }
 
 function deleteTrader(name) {

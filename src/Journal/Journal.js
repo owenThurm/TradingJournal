@@ -91,16 +91,40 @@ class Journal extends React.Component {
             riskPercentage: '???',
             fees: trade.fees,
             gain: trade.profit,
-            hitOrigTP: '??'
+            hitOrigTP: this.checkIfTakeProfitHit(trade) ? "YES" : "NO",
           }
         });
       }
+      console.log(this.state.hitOrigTP);
       this.setState({
         trades: trades
       });
     }).catch(err => {
       console.log(err);
     });
+  }
+
+  /**
+   * Verifies whether the user's take profit was hit.
+   * 
+   * @param {trade} the given trade the look at
+   * @return true if take profit was hit, false otherwise.
+   */
+  checkIfTakeProfitHit(trade) {
+
+    // Handle buy case
+    // Exit should be equal to or higher than exit price
+    console.log("here");
+    if (trade.buyOrSell) {
+      return trade.exitPrice >= trade.takeProfit;
+    }
+    // Handle sell case
+    // Exit should be equal to or less than exit price
+    else {
+      return trade.exitPrice <= trade.takeProfit;
+    }
+    
+
   }
 
   render() {

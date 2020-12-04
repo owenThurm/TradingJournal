@@ -4,7 +4,7 @@ const Winrate = (props) => {
 
     return (
         <div>
-            <Progress type="circle" percent={70} width={60} />
+            <Progress type="circle" percent={props.winrate} width={60} />
         </div>
     );
 

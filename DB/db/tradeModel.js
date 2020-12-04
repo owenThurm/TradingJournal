@@ -54,11 +54,17 @@ async function addTrade(name, trade) {
   if(result.error) return Promise.reject(result.error);
   else {
     var newTradeList = await getTrader(name).then(response => {
+      // console.log("response");
+      // console.log(response);
+      // console.log("trade");
+      // console.log(trade);
       trade.tradeID = response[0].trades ? response[0].trades.length+1 : 1;
       return response[0].trades ? insertion(trade, response[0].trades) : [trade];
     }).catch(err => {
       console.log(err);
     });
+    // console.log("new trade list");
+    // console.log(newTradeList);
     return traders.findOneAndUpdate({username: name},
       { $set: { trades: newTradeList } });
   }
@@ -69,19 +75,17 @@ function insertion(trade, tradeList) {
   //insert new trade into new trade list at the first position where a date
   //is <= this trade date.
 
-  console.log(tradeList);
-  console.log(mapDate(trade.exitDate));
+  //console.log(tradeList);
+  //console.log(mapDate(trade.exitDate));
 
   for(var i=tradeList.length-1; i>=0; i--) {
     if(mapDate(tradeList[i].exitDate) <= mapDate(trade.exitDate)) {
       //Insert
       tradeList.splice(i+1, 0, trade);
-      break;
-    }
-    else {
-      tradeList.splice(0, 0, trade);
+      return tradeList;
     }
   }
+  tradeList.splice(0, 0, trade);
   return tradeList;
 }
 

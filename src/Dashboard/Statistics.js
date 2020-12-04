@@ -9,7 +9,7 @@ class Statistics extends React.Component {
         this.state = {
             statistics: {
                 numWinners: 7,
-                numLosers: 3,
+                numLosers: 5,
                 maxDrawdown: 0.20,
                 averageR: 2,
                 expectancy: 8.8,
@@ -18,20 +18,25 @@ class Statistics extends React.Component {
                 averageWinner: 1.21,
                 averageLoser: -0.90,
 
-            }
+            },
         };
     }
 
-    /*componentDidMount() {
-        this.setState({
-            statistics: {
-                numWinners: 12,
-                numLosers: 4,
-            }
-        });
-    }*/
+    componentDidMount() {
+
+        // axios request to get statistics
+        
+    }
+
+
 
     render() {
+
+        var winrate = Math.round(this.state.statistics.numWinners / (this.state.statistics.numLosers + 
+            this.state.statistics.numWinners) * 100);
+
+        
+
         return (
             <div>
                 <h1>Statistics Test</h1>
@@ -40,7 +45,7 @@ class Statistics extends React.Component {
                         <h3 className="winner">Winners: {this.state.statistics.numWinners}</h3>
                         <h3 className="loser">Losers: {this.state.statistics.numLosers}</h3>
                     </Col>
-                    <Col span={8}><Winrate/></Col>
+                    <Col span={8}><Winrate winrate={winrate}/></Col>
                 </Row>
                 <Row gutter={[24, 16]}>
                     <Col span={8}>Average Winner: {this.state.statistics.averageWinner}</Col>

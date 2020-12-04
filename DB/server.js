@@ -12,10 +12,12 @@ const variable = 5;
 //GET ALL TRADERS
 app.get('/', async (req, res) => {
   var trademans = await traders.getAll();
+  console.log(trademans);
   res.json({
     traders: trademans
   });
   res.end();
+  //res.send("HELLO");
 });
 
 //GET ONE TRADER

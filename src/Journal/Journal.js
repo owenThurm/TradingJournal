@@ -9,7 +9,7 @@ class Journal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: 'sabine',
+      username: 'Alec',
       trades: []
     }
     this.columns =  [
@@ -90,8 +90,8 @@ class Journal extends React.Component {
             stopLoss: trade.stopLoss,
             riskPercentage: '???',
             fees: trade.fees,
-            gain: '???',
-            hitOrigTP: '???'
+            gain: trade.profit,
+            hitOrigTP: '??'
           }
         });
       }

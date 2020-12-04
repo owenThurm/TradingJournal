@@ -5,14 +5,22 @@ class EquityGraph extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-
-      equity: [100, 200, 90, 50, 10, 40, 30],
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+      username: 'Alec',
+      equity: [10, 500, 100, 56, 47, 88, 130],
+      //Exit dates of trades
+      labels: ['10-1-20', '10-2-20'],
 
     };
   }
 
   componentDidMount() {
+    //Axios Get Trades -> set state
+
+    //For every new date ->
+    //store date in labels,
+    //sum the gain/loss over that date,
+    //push the sum into the equity.
+
     var ctx = document.getElementById('myChart').getContext('2d');
     var myChart = new Chart(ctx, {
       type: 'line',

@@ -9,11 +9,10 @@ import axios from 'axios';
 
 class AddTrade extends React.Component {
   formRef = React.createRef();
-
   constructor(props) {
     super(props);
     this.state = {
-      username: 'sabine',
+      username: 'Alec',
       visible: false,
       entryDate: null,
       instrument: null,
@@ -90,12 +89,14 @@ class AddTrade extends React.Component {
     });
   }
 
+
   handleCancel = () => {
     this.setState({
       visible: false
     });
   }
 
+  //parses new values for update
   handleUpdate = (update, type) => {
     var value = null;
     if(typeof(update) == 'boolean') value = update;
@@ -107,6 +108,7 @@ class AddTrade extends React.Component {
     this.setUpdate(type, value);
   }
 
+  //Switch on type to decide which value to update.
   setUpdate = (type, value) => {
     switch(type) {
       case 'entryDate':
@@ -179,6 +181,7 @@ class AddTrade extends React.Component {
     }
   }
 
+  //
   checkNumber = (rule, value) => {
     if(isNaN(value)) return Promise.reject();
     else return Promise.resolve();

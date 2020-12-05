@@ -89,10 +89,7 @@ async function deleteTrade(name, tradeID) {
     });
     for(var i=0; i<newList.length; i++) {
       var trade = newList[i];
-      //console.log(trade.tradeID);
-      //console.log(trade);
       if(trade.tradeID > tradeID) trade.tradeID--;
-      //console.log(trade.tradeID);
     };
     console.log(newList);
     return newList;

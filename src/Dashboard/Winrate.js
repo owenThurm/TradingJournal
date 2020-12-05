@@ -1,10 +1,14 @@
-import { Progress } from 'antd';
+import { Tooltip, Progress } from 'antd';
 
 const Winrate = (props) => {
 
     return (
         <div>
-            <Progress type="circle" percent={props.winrate} width={60} />
+            <Tooltip >
+                <Progress strokeColor='red' trailColor='gray'
+                percent={props.loseRate+props.winRate}
+                success={{ percent: props.winRate }} type="circle" />
+            </Tooltip>
         </div>
     );
 

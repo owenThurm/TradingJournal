@@ -38,18 +38,14 @@ class EquityGraph extends React.Component {
     console.log(trader);
 
     for(var i=0; i<trades.length; i++) {
-      // console.log("dailySum");
-      // console.log(dailySum);
       var trade = trades[i];
-      console.log(trade);
-      console.log(trades);
-      dailySum += parseInt(trade.profit);
+      dailySum += trade.profit;
       if(this.mapDate(trade.exitDate) > latestDate) {
 
         labelList.push(trade.exitDate.slice(0,10));
         equityList.push(dailySum);
         latestDate = this.mapDate(trade.exitDate.slice(0,10));
-        
+
       } else {
         equityList.pop();
         equityList.push(dailySum);

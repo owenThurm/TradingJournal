@@ -2,19 +2,19 @@ const Joi = require('@hapi/joi');
 const db = require('./connection');
 
 const tradeSchema = Joi.object().keys({
-  tradeID: Joi.number(),
+  tradeID: Joi.number().strict(),
   entryDate: Joi.date().required(),
   instrument: Joi.string().required(),
   setup: Joi.string().required(),
-  entryPrice: Joi.number().required(),
-  quantity: Joi.number().required(),
-  stopLoss: Joi.number().required(),
-  takeProfit: Joi.number().required(),
+  entryPrice: Joi.number().strict().required(),
+  quantity: Joi.number().strict().required(),
+  stopLoss: Joi.number().strict().required(),
+  takeProfit: Joi.number().strict().required(),
   exitDate: Joi.date().required(),
-  exitPrice: Joi.number().required(),
-  profit: Joi.number().required(),
-  fees: Joi.number().required(),
-  buyOrSell: Joi.boolean().required(),
+  exitPrice: Joi.number().strict().required(),
+  profit: Joi.number().strict().required(),
+  fees: Joi.number().strict().required(),
+  buyOrSell: Joi.boolean().strict().required(),
   comments: Joi.string().allow(null).allow('')
 });
 
@@ -22,7 +22,7 @@ const tradeSchema = Joi.object().keys({
 const traderSchema = Joi.object().keys({
   username: Joi.string().alphanum().min(3).max(12).required(),
   password: Joi.string().min(6).required(),
-  balance: Joi.number().required(),
+  balance: Joi.number().strict().required(),
   trades: Joi.array().items(tradeSchema).required()
 });
 
@@ -54,17 +54,11 @@ async function addTrade(name, trade) {
   if(result.error) return Promise.reject(result.error);
   else {
     var newTradeList = await getTrader(name).then(response => {
-      // console.log("response");
-      // console.log(response);
-      // console.log("trade");
-      // console.log(trade);
       trade.tradeID = response[0].trades ? response[0].trades.length+1 : 1;
       return response[0].trades ? insertion(trade, response[0].trades) : [trade];
     }).catch(err => {
       console.log(err);
     });
-    // console.log("new trade list");
-    // console.log(newTradeList);
     return traders.findOneAndUpdate({username: name},
       { $set: { trades: newTradeList } });
   }
@@ -74,9 +68,6 @@ function insertion(trade, tradeList) {
 
   //insert new trade into new trade list at the first position where a date
   //is <= this trade date.
-
-  //console.log(tradeList);
-  //console.log(mapDate(trade.exitDate));
 
   for(var i=tradeList.length-1; i>=0; i--) {
     if(mapDate(tradeList[i].exitDate) <= mapDate(trade.exitDate)) {

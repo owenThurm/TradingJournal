@@ -87,6 +87,14 @@ async function deleteTrade(name, tradeID) {
     response[0].trades.map(trade => {
       if(trade.tradeID != tradeID) newList.push(trade);
     });
+    for(var i=0; i<newList.length; i++) {
+      var trade = newList[i];
+      //console.log(trade.tradeID);
+      //console.log(trade);
+      if(trade.tradeID > tradeID) trade.tradeID--;
+      //console.log(trade.tradeID);
+    };
+    console.log(newList);
     return newList;
   }).catch(err => {
     console.log(err);
@@ -111,10 +119,6 @@ function insertTrader(trader) {
   var result = traderSchema.validate(trader);
   if(result.error) return Promise.reject(result.error);
   else {
-
-    console.log('trader: <<<' + trader);
-    console.log('trades: <<<' + trader.trades);
-    console.log('tradesLength: <<<' + trader.trades.length);
     var sortedTrades = [];
     //Loop through trader trades
     //give each trade an appropriate trade id

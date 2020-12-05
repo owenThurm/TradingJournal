@@ -23,7 +23,6 @@ class EquityGraph extends React.Component {
     console.log("trades");
     console.log(trades);
 
-
     //For every new date ->
     //store date in labels, if not already stored
     //sum the gain/loss over that date,
@@ -33,19 +32,15 @@ class EquityGraph extends React.Component {
     var equityList = this.state.equity;
     equityList.push(dailySum)
     var labelList = this.state.labels;
-    labelList.push(trades[0].entryDate)
-
-    console.log(trader);
+    labelList.push(trades[0].entryDate.slice(0,10));
 
     for(var i=0; i<trades.length; i++) {
       var trade = trades[i];
       dailySum += trade.profit;
       if(this.mapDate(trade.exitDate) > latestDate) {
-
         labelList.push(trade.exitDate.slice(0,10));
         equityList.push(dailySum);
         latestDate = this.mapDate(trade.exitDate.slice(0,10));
-
       } else {
         equityList.pop();
         equityList.push(dailySum);

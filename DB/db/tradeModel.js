@@ -55,7 +55,7 @@ async function addTrade(name, trade) {
   else {
     var newTradeList = await getTrader(name).then(response => {
       trade.tradeID = response[0].trades ? response[0].trades.length+1 : 1;
-      return response[0].trades ? insertion(trade, response[0].trades) : [trade];
+      return response[0].trades ? tradeInsertion(trade, response[0].trades) : [trade];
     }).catch(err => {
       console.log(err);
     });
@@ -64,7 +64,8 @@ async function addTrade(name, trade) {
   }
 }
 
-function insertion(trade, tradeList) {
+//Insert a trade into a list of trades according to date.
+function tradeInsertion(trade, tradeList) {
 
   //insert new trade into new trade list at the first position where a date
   //is <= this trade date.
@@ -100,14 +101,35 @@ function mapDate(date) {
   return dateList[0] * 365 + dateList[1] * 30 + dateList[2];
 }
 
+//DELETE TRADER
 function deleteTrader(name) {
   return traders.findOneAndDelete({ username: name });
 }
 
+//ADD TRADER
 function insertTrader(trader) {
   var result = traderSchema.validate(trader);
   if(result.error) return Promise.reject(result.error);
-  else return traders.insert(trader);
+  else {
+
+    console.log('trader: <<<' + trader);
+    console.log('trades: <<<' + trader.trades);
+    console.log('tradesLength: <<<' + trader.trades.length);
+    var sortedTrades = [];
+    //Loop through trader trades
+    //give each trade an appropriate trade id
+    //insert each trade in the right date position in a list
+    for(var i=0; i<trader.trades.length; i++) {
+      trader.trades[i].tradeID = i+1;
+      sortedTrades = tradeInsertion(trader.trades[i], sortedTrades);
+    }
+
+    //assign the trader.trades to the new list
+    trader.trades = sortedTrades;
+
+    //push the trader into the db
+    return traders.insert(trader);
+  }
 }
 
 module.exports = {insertTrader, getAll, deleteTrader, getTrader,

@@ -1,7 +1,7 @@
 import React from 'react';
 import './Dashboard.css';
-import WeeklyChange from './WeeklyChange';
-import AccountBalance from './AccountBalance';
+import { WeeklyChange } from './WeeklyChange';
+import { AccountBalance } from './AccountBalance';
 import EquityGraph from './EquityGraph';
 import Statistics from './Statistics';
 import 'antd/dist/antd.css';

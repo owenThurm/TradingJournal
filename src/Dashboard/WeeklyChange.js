@@ -1,20 +1,11 @@
 import React from 'react';
+import { Card } from 'antd';
 
-class WeeklyChange extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      change: props.change
-    };
-  }
-
-  render() {
-    return(
-      <div className="WeeklyChange">
-        {'Weekly Change ' + this.state.change + '%'}
-      </div>
-    );
-  }
+export const WeeklyChange = props => {
+  return (
+    <Card title='Weekly Change' size={'small'}
+    style={{textAlign: 'center', width: 130}} type='inner'>
+      {props.change}%
+    </Card>
+  )
 }
-
-export default WeeklyChange;

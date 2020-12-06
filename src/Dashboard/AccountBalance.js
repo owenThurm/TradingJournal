@@ -1,20 +1,13 @@
 import React from 'react';
 import './Dashboard.css';
+import { Card } from 'antd';
 
-class AccountBalance extends React.Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      balance: props.balance
-    };
-  }
-
-  render() {
-    return(
-    <div className="AccountBalance">{'Balance'} <br/> {'$' + this.state.balance}</div>
-    )
-  }
+export const AccountBalance = props => {
+  return(
+    <Card title="Balance" bordered={false} size='small' type='inner'
+    style={{width: 130, textAlign: 'center'}}>
+      ${props.balance}
+    </Card>
+  );
 }
-
-export default AccountBalance;

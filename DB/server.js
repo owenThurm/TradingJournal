@@ -37,17 +37,58 @@ app.get('/:username', (req, res) => {
 app.get('/statistics/:username', (req, res) => {
   var username = req.params.username;
   traders.getTrader(username).then(response => {
+    //console.log(response[0].trades);
+    var trades = response[0].trades;
+    var wins = []
+    var losses = []
+    var breakeven = []
+    var averageR = 0
+    var sumR = 0
+    var averageWinner = 0;
+    var averageLoser = 0;
+    var sumWins = 0;
+    var sumLosses = 0;
+    
+    for(var i = 0; i < trades.length; i++) {
+      if (trades[i].profit > 0) {
+        wins.push(trades[i]);
+        averageWinner += parseInt(trades[i].profit);
+      }
+      else if (trades[i].profit < 0) {
+        losses.push(trades[i]);
+        averageLoser += parseInt(trades[i].profit);
+      }
+      else breakeven.push(trades[i]);
+
+      console.log(calculateRiskReward(trades[i]));
+      averageR += calculateRiskReward(trades[i])
+      sumR += calculateRiskReward(trades[i]);
+
+    }
+
+    sumWins = averageWinner;
+    sumLosses = averageLoser;
+
+    averageR /= trades.length
+    averageWinner /= wins.length
+    averageLoser /= losses.length
+
+    var winPercentage = wins.length / (wins.length + losses.length + breakeven.length);
+    var lossPercentage = losses.length / (wins.length + losses.length + breakeven.length);
+    var expectancy = (averageWinner *  winPercentage) - (averageLoser * lossPercentage);
+    var profitFactor = Math.abs(sumWins / sumLosses);
+
+
     res.json({
       statistics: {
-        numWinners: 7,
-        numLosers: 7,
-        maxDrawdown: 0.20,
-        averageR: 2,
-        expectancy: 8.8,
-        profitFactor: 2.2,
-        sumR: 20.0,
-        averageWinner: 1.21,
-        averageLoser: -2,
+        numWinners: wins.length,
+        numLosers: losses.length,
+        averageR: averageR,
+        expectancy: expectancy,
+        profitFactor: profitFactor,
+        sumR: sumR,
+        averageWinner: averageWinner,
+        averageLoser: averageLoser,
       }
     });
   }).catch(err => {
@@ -55,6 +96,27 @@ app.get('/statistics/:username', (req, res) => {
     res.json(err);
   });
 });
+
+function calculateRiskReward(trade) {
+
+  //console.log("stop");
+  //console.log(typeof trade.stopLoss === 'number');
+
+  var stop = parseFloat(trade.stopLoss);
+  var exitPrice = parseFloat(trade.exitPrice);
+  var entry = parseFloat(trade.entryPrice);
+
+  console.log("stop" + stop);
+  console.log("exit" + exitPrice);
+  console.log("entry" + entry);
+
+  if (entry == stop) {
+    return 0;
+  }
+
+  return (exitPrice - entry) / (entry - stop)
+
+}
 
 //CREATE TRADER
 app.post('/', (req, res) => {

@@ -11,7 +11,6 @@ class Statistics extends React.Component {
             statistics: {
                 numWinners: 7,
                 numLosers: 5,
-                maxDrawdown: 0.20,
                 averageR: 2,
                 expectancy: 8.8,
                 profitFactor: 2.2,
@@ -43,6 +42,9 @@ class Statistics extends React.Component {
 
         var winrate = Math.round(this.state.statistics.numWinners / (this.state.statistics.numLosers +
             this.state.statistics.numWinners) * 100);
+            console.log(this.state.statistics.numWinners);
+            console.log(this.state.statistics.numLosers);
+            console.log(winrate);
 
 
 
@@ -54,7 +56,7 @@ class Statistics extends React.Component {
                         <h3 className="winner">Winners: {this.state.statistics.numWinners}</h3>
                         <h3 className="loser">Losers: {this.state.statistics.numLosers}</h3>
                     </Col>
-                    <Col span={8}><Winrate winRate={winrate} loseRate={20}/></Col>
+                    <Col span={8}><Winrate winRate={winrate} loseRate={0}/></Col>
                 </Row>
                 <Row gutter={[24, 16]}>
                     <Col span={8}>Average Winner: {this.state.statistics.averageWinner}</Col>

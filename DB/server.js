@@ -33,6 +33,29 @@ app.get('/:username', (req, res) => {
   });
 });
 
+//GET STATISTICS FOR ONE TRADER
+app.get('/statistics/:username', (req, res) => {
+  var username = req.params.username;
+  traders.getTrader(username).then(response => {
+    res.json({
+      statistics: {
+        numWinners: 7,
+        numLosers: 7,
+        maxDrawdown: 0.20,
+        averageR: 2,
+        expectancy: 8.8,
+        profitFactor: 2.2,
+        sumR: 20.0,
+        averageWinner: 1.21,
+        averageLoser: -2,
+      }
+    });
+  }).catch(err => {
+    console.log(err);
+    res.json(err);
+  });
+});
+
 //CREATE TRADER
 app.post('/', (req, res) => {
 
@@ -126,6 +149,6 @@ app.delete('/', (req, res) => {
 });
 
 app.listen(port, err => {
-  if(err) console.log(err);
+  if (err) console.log(err);
   else console.log(`App listening on port ${port}...`)
 })

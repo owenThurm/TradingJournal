@@ -1,6 +1,7 @@
 import React from 'react';
 import Winrate from './Winrate';
 import { Row, Col, Progress } from 'antd';
+import axios from 'axios';
 
 class Statistics extends React.Component {
 
@@ -17,14 +18,22 @@ class Statistics extends React.Component {
                 sumR: 20.0,
                 averageWinner: 1.21,
                 averageLoser: -0.90,
-
             },
+            username : "Alec"
         };
     }
 
     componentDidMount() {
 
         // axios request to get statistics
+        axios.get("/statistics/" + this.state.username).then(response => {
+            this.setState({
+                statistics: response.data.statistics
+            })
+        })
+        .catch(err => {
+            console.log(err);
+        });
 
     }
 

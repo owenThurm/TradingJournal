@@ -106,7 +106,7 @@ class Journal extends React.Component {
 
   /**
    * Verifies whether the user's take profit was hit.
-   * 
+   *
    * @param {trade} the given trade the look at
    * @return true if take profit was hit, false otherwise.
    */
@@ -123,14 +123,13 @@ class Journal extends React.Component {
     else {
       return trade.exitPrice <= trade.takeProfit;
     }
-    
+
 
   }
 
   render() {
     return(
       <div style={{margin: "20px"}}>
-        <p>Journal</p>
         <AddTrade onNewTrade={() => {
           this.refreshTrades();
           } }/>

@@ -1,10 +1,11 @@
 import React from 'react';
 import { Menu, Row } from 'antd';
-import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
 import { Deposit } from './Deposit';
 import { Switch, Link } from 'react-router-dom';
 import ProtectedRoute from '../ProtectedRoute';
 import { General } from './General';
+import { ResetPassword } from './ResetPassword';
+import { Withdraw } from './Withdraw';
 
 const { SubMenu } = Menu;
 
@@ -38,15 +39,25 @@ class Settings extends React.Component {
                   Deposit Balance
                 </Link>
               </Menu.Item>
-              <Menu.Item>Withdraw Balance</Menu.Item>
+              <Menu.Item>
+                <Link to='/settings/withdraw'>
+                  Withdraw Balance
+                </Link>
+              </Menu.Item>
             </SubMenu>
             <SubMenu title='Login Information'>
-              <Menu.Item>Reset Password</Menu.Item>
+              <Menu.Item>
+                <Link to='/settings/resetpassword'>
+                  Reset Password
+                </Link>
+              </Menu.Item>
             </SubMenu>
           </Menu>
           <Switch>
-            <ProtectedRoute exact path="/settings" component={General} />
-            <ProtectedRoute exact path='/settings/deposit' component={Deposit} />
+            <ProtectedRoute path='/settings/deposit' component={Deposit} />
+            <ProtectedRoute path='/settings/withdraw' component={Withdraw} />
+            <ProtectedRoute path='/settings/resetpassword' component={ResetPassword} />
+            <ProtectedRoute path="/settings" component={General} />
           </Switch>
         </Row>
       </div>

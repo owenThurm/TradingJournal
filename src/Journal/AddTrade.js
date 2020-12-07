@@ -187,7 +187,6 @@ class AddTrade extends React.Component {
     else return Promise.resolve();
   }
 
-
   render() {
 
     console.log(this.formRef);
@@ -207,8 +206,7 @@ class AddTrade extends React.Component {
             <Row gutter={[10, 45]}  justify="center">
               <Col>
                 <Card title='General Trade Data' style={{ width: 250, height:235}}>
-                  <Row gutter={[0, 20]}>
-
+                  <Row gutter={[0, 30]}>
                     <Form.Item name="entryDate" rules={[{
                         required: true,
                         message: 'Entry Date Required!'

@@ -14,6 +14,7 @@ import NavBar from './Dashboard/NavBar';
 import ProtectedRoute from './ProtectedRoute';
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
+import Settings from './Settings/Settings';
 
 //import 'antd/dist/antd.css';
 //import {DatePicker} from 'antd';
@@ -31,6 +32,7 @@ const DefaultContainer = () => (
   <div className="container">
     <NavBar />
     <Switch>
+      <ProtectedRoute exact path="/settings" component={Settings} />
       <ProtectedRoute exact path="/journal" component={Journal} />
       <ProtectedRoute exact path="/" component={Dashboard} />
     </Switch>

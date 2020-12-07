@@ -6,7 +6,6 @@ import EquityGraph from './EquityGraph';
 import Statistics from './Statistics';
 import 'antd/dist/antd.css';
 import { Row, Col } from 'antd';
-import NavBar from './NavBar';
 
 class Dashboard extends React.Component {
 
@@ -23,7 +22,6 @@ class Dashboard extends React.Component {
           </Row>
         </div>
         <Statistics />
-
       </div>
 
 

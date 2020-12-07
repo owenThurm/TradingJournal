@@ -3,9 +3,10 @@ import {
     Link,
 } from 'react-router-dom';
 import { Menu } from 'antd';
-import { HomeOutlined, BookOutlined } from '@ant-design/icons';
+import { HomeOutlined, BookOutlined, SettingOutlined } from '@ant-design/icons';
 
 
+const SubMenu = Menu;
 
 function NavBar() {
 
@@ -19,6 +20,9 @@ function NavBar() {
                 <Link to="/journal">Journal</Link>
             </Menu.Item>
 
+            <Menu.Item icon={<SettingOutlined />}>
+                <Link to="/settings">Settings</Link>
+            </Menu.Item>
         </Menu>
     );
 

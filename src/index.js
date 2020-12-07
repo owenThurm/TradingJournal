@@ -16,10 +16,6 @@ import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
 import Settings from './Settings/Settings';
 
-//import 'antd/dist/antd.css';
-//import {DatePicker} from 'antd';
-
-
 const LoginContainer = () => (
   <div className="container">
     <Route exact path="/" render={() => <Redirect to="/login" />} />
@@ -32,9 +28,9 @@ const DefaultContainer = () => (
   <div className="container">
     <NavBar />
     <Switch>
-      <ProtectedRoute exact path="/settings" component={Settings} />
-      <ProtectedRoute exact path="/journal" component={Journal} />
-      <ProtectedRoute exact path="/" component={Dashboard} />
+      <ProtectedRoute path="/settings" component={Settings} />
+      <ProtectedRoute path="/journal" component={Journal} />
+      <ProtectedRoute path="/" component={Dashboard} />
     </Switch>
   </div>
 );

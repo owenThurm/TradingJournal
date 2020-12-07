@@ -1,10 +1,11 @@
 import React from 'react';
+import { Card } from 'antd';
 
 
 export const Withdraw = props => {
-  return(
-    <div>
+  return (
+    <Card style={{width: 1139, height: 550}}>
       Withdraw
-    </div>
+    </Card>
   )
 }

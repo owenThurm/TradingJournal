@@ -1,5 +1,5 @@
 import React from 'react';
-import { Menu, Row } from 'antd';
+import { Menu, Row, Col } from 'antd';
 import { Deposit } from './Deposit';
 import { Switch, Link } from 'react-router-dom';
 import ProtectedRoute from '../ProtectedRoute';
@@ -22,43 +22,47 @@ class Settings extends React.Component {
   render() {
     return(
       <div style={{ margin: 20 }}>
-        <Row>
-          <Menu
-          onClick={this.handleClick}
-          style={{ width: 256, backgroundColor: 'white' }}
-          defaultSelectedKeys={['1']}
-          defaultOpenKeys={['sub1']}
-          mode="inline"
-          >
-            <Menu.Item>
-              <Link to='/settings'>General Settings</Link>
-            </Menu.Item>
-            <SubMenu title='Account Balance'>
+        <Row gutter={[5, 0]}>
+          <Col>
+            <Menu
+            onClick={this.handleClick}
+            style={{ width: 256, backgroundColor: 'white' }}
+            defaultSelectedKeys={['1']}
+            defaultOpenKeys={['sub1']}
+            mode="inline"
+            >
               <Menu.Item>
-                <Link to='/settings/deposit'>
-                  Deposit Balance
-                </Link>
+                <Link to='/settings'>General Settings</Link>
               </Menu.Item>
-              <Menu.Item>
-                <Link to='/settings/withdraw'>
-                  Withdraw Balance
-                </Link>
-              </Menu.Item>
-            </SubMenu>
-            <SubMenu title='Login Information'>
-              <Menu.Item>
-                <Link to='/settings/resetpassword'>
-                  Reset Password
-                </Link>
-              </Menu.Item>
-            </SubMenu>
-          </Menu>
-          <Switch>
-            <ProtectedRoute path='/settings/deposit' component={Deposit} />
-            <ProtectedRoute path='/settings/withdraw' component={Withdraw} />
-            <ProtectedRoute path='/settings/resetpassword' component={ResetPassword} />
-            <ProtectedRoute path="/settings" component={General} />
-          </Switch>
+              <SubMenu title='Account Balance'>
+                <Menu.Item>
+                  <Link to='/settings/deposit'>
+                    Deposit Balance
+                  </Link>
+                </Menu.Item>
+                <Menu.Item>
+                  <Link to='/settings/withdraw'>
+                    Withdraw Balance
+                  </Link>
+                </Menu.Item>
+              </SubMenu>
+              <SubMenu title='Login Information'>
+                <Menu.Item>
+                  <Link to='/settings/resetpassword'>
+                    Reset Password
+                  </Link>
+                </Menu.Item>
+              </SubMenu>
+            </Menu>
+          </Col>
+          <Col>
+            <Switch>
+              <ProtectedRoute path='/settings/deposit' component={Deposit} />
+              <ProtectedRoute path='/settings/withdraw' component={Withdraw} />
+              <ProtectedRoute path='/settings/resetpassword' component={ResetPassword} />
+              <ProtectedRoute path="/settings" component={General} />
+            </Switch>
+          </Col>
         </Row>
       </div>
     );

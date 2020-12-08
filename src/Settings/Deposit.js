@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, Input, Button, Form } from 'antd';
 import axios from 'axios';
+import { isNumber } from '../utils';
 
 export const Deposit = props => {
   console.log(props);
@@ -19,11 +20,6 @@ export const Deposit = props => {
     }).catch(err => {
       console.log(err);
     });
-  }
-
-  const isNumber = (rule, value) => {
-    if(isNaN(value)) return Promise.reject();
-    else return Promise.resolve();
   }
 
   return (

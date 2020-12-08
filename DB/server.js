@@ -216,6 +216,7 @@ app.delete('/:username/:tradeID', (req, res) => {
 app.post('/:username/withdraw', (req, res) => {
   var username = req.params.username;
   var amount = req.body.amount;
+  console.log(amount);
   traders.withdraw(username, amount).then(response => {
     res.status(200);
     res.json({
@@ -225,7 +226,7 @@ app.post('/:username/withdraw', (req, res) => {
     res.status(500);
     console.log(err);
   });
-})
+});
 
 //DEPOSIT MONEY
 app.post('/:username/deposit', (req, res) => {

@@ -1,12 +1,7 @@
 import React from 'react';
-import {
-    Link,
-} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Menu } from 'antd';
 import { HomeOutlined, BookOutlined, SettingOutlined } from '@ant-design/icons';
-
-
-const SubMenu = Menu;
 
 function NavBar() {
 
@@ -27,6 +22,5 @@ function NavBar() {
     );
 
 }
-
 
 export default NavBar;

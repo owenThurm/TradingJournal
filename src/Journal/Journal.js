@@ -1,6 +1,5 @@
 import React from 'react';
-import { Modal, Button, Input } from 'antd';
-import { Table, Tag, Space } from 'antd';
+import { Table } from 'antd';
 import AddTrade from './AddTrade';
 import axios from 'axios';
 

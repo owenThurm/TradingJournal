@@ -42,9 +42,6 @@ class Statistics extends React.Component {
 
         var winrate = Math.round(this.state.statistics.numWinners / (this.state.statistics.numLosers +
             this.state.statistics.numWinners) * 100);
-            console.log(this.state.statistics.numWinners);
-            console.log(this.state.statistics.numLosers);
-            console.log(winrate);
 
 
 

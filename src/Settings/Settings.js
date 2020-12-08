@@ -57,7 +57,7 @@ class Settings extends React.Component {
           </Col>
           <Col>
             <Switch>
-              <ProtectedRoute path='/settings/deposit' component={Deposit} />
+              <ProtectedRoute path='/settings/deposit' component={Deposit} componentProps={{username: 'Alec'}}/>
               <ProtectedRoute path='/settings/withdraw' component={Withdraw} />
               <ProtectedRoute path='/settings/resetpassword' component={ResetPassword} />
               <ProtectedRoute path="/settings" component={General} />

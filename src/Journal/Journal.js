@@ -77,8 +77,9 @@ class Journal extends React.Component {
       var trader = response.data.trader[0];
       if(trader.trades) {
 
-        var trades = trader.trades.reverse().map(trade => {
-          if(!trade.isTransaction) {
+        var trades = trader.trades.filter(trade => !trade.isTransaction);
+
+        trades = trades.reverse().map(trade => {
             return {
               key: trade.tradeID,
               instrument: trade.instrument,
@@ -92,11 +93,10 @@ class Journal extends React.Component {
               riskPercentage: '???',
               fees: trade.fees,
               gain: trade.profit,
-              hitOrigTP: this.checkIfTakeProfitHit(trade) ? "YES" : "NO",
-            }
+              hitOrigTP: this.checkIfTakeProfitHit(trade) ? "YES" : "NO"
           }
-          console.log(trades);
         });
+        console.log(trades);
       }
       console.log(this.state.hitOrigTP);
       this.setState({

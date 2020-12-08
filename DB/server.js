@@ -1,7 +1,6 @@
 const Express = require('express');
 const traders = require('./db/tradeModel');
 const bodyParser = require('body-parser');
-const { response } = require('express');
 
 const app = Express();
 const port = 5000;

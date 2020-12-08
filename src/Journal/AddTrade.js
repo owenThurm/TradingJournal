@@ -2,9 +2,6 @@ import React from 'react';
 import { Modal, Button, Input, Select, InputNumber,
    Row, Col, Form, Card, DatePicker, Switch } from 'antd';
 import { CloseOutlined, CheckOutlined } from '@ant-design/icons';
-import GeneralTradeData from './GeneralTradeData';
-import TradeEntry from './TradeEntry';
-import TradeExit from './TradeExit';
 import axios from 'axios';
 
 class AddTrade extends React.Component {
@@ -37,26 +34,32 @@ class AddTrade extends React.Component {
   }
 
   handleSubmitTrade = () => {
-    //TODO: POST axios request to our express api.
+    //POST axios request to our express api.
     //access trade info via state.
-
+    console.log(this.state.entryDate);
+    console.log(this.state.exitDate);
+    console.log(this.state.exitDate.getMonth());
+    console.log(this.state.exitDate.getDay());
+    console.log(this.state.exitDate.getYear());
+    console.log(this.state.exitDate.getMonth()+1+'-'+this.state.exitDate.getDate()+'-'+this.state.exitDate.getFullYear());
     axios({
       method: 'POST',
       url: '/' + this.state.username + '/trade',
       data: {
-        entryDate: this.state.entryDate,
+        entryDate: this.state.entryDate.getMonth()+1+'-'+this.state.entryDate.getDate()+'-'+this.state.entryDate.getFullYear(),
         instrument: this.state.instrument,
         setup: this.state.setup,
         entryPrice: parseInt(this.state.entryPrice),
         quantity: parseInt(this.state.quantity),
         stopLoss: parseInt(this.state.stopLoss),
         takeProfit: parseInt(this.state.takeProfit),
-        exitDate: this.state.exitDate,
+        exitDate: this.state.exitDate.getMonth()+1+'-'+this.state.exitDate.getDate()+'-'+this.state.exitDate.getFullYear(),
         exitPrice: parseInt(this.state.exitPrice),
         profit: parseInt(this.state.profit),
         fees: parseInt(this.state.fees),
         buyOrSell: this.state.buyOrSell,
-        comments: this.state.comments ? this.state.comments : ""
+        comments: this.state.comments ? this.state.comments : "",
+        isTransaction: false
       }
     }).then(response => {
       this.setState({
@@ -88,7 +91,6 @@ class AddTrade extends React.Component {
       console.log('ERR: ' + err);
     });
   }
-
 
   handleCancel = () => {
     this.setState({

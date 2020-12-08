@@ -1,23 +1,23 @@
-const Joi = require('@hapi/joi');
+const Joi = require('@hapi/joi').extend(require('@hapi/joi-date'));
 const db = require('./connection');
 
 const tradeSchema = Joi.object().keys({
   tradeID: Joi.number().strict(),
-  entryDate: Joi.date().required(),
+  entryDate: Joi.date().strict().required(),
   instrument: Joi.string().required(),
   setup: Joi.string().required(),
   entryPrice: Joi.number().strict().required(),
   quantity: Joi.number().strict().required(),
   stopLoss: Joi.number().strict().required(),
   takeProfit: Joi.number().strict().required(),
-  exitDate: Joi.date().required(),
+  exitDate: Joi.date().strict().required(),
   exitPrice: Joi.number().strict().required(),
   profit: Joi.number().strict().required(),
   fees: Joi.number().strict().required(),
   buyOrSell: Joi.boolean().strict().required(),
-  comments: Joi.string().allow(null).allow('')
+  comments: Joi.string().allow(null).allow(''),
+  isTransaction: Joi.boolean().strict().required()
 });
-
 
 const traderSchema = Joi.object().keys({
   username: Joi.string().alphanum().min(3).max(12).required(),
@@ -71,7 +71,7 @@ function tradeInsertion(trade, tradeList) {
   //is <= this trade date.
 
   for(var i=tradeList.length-1; i>=0; i--) {
-    if(mapDate(tradeList[i].exitDate) <= mapDate(trade.exitDate)) {
+    if(tradeList[i].exitDate.getTime() <= trade.exitDate.getTime()) {
       //Insert
       tradeList.splice(i+1, 0, trade);
       return tradeList;
@@ -98,12 +98,6 @@ async function deleteTrade(name, tradeID) {
   })
   return traders.findOneAndUpdate({username: name},
     {$set: {trades: newTradeList } });
-}
-
-//Maps dates to integers
-function mapDate(date) {
-  var dateList = date.slice(0,10).split('-');
-  return dateList[0] * 365 + dateList[1] * 30 + dateList[2];
 }
 
 //DELETE TRADER
@@ -133,5 +127,47 @@ function insertTrader(trader) {
   }
 }
 
+//WITHDRAW BALANCE
+function withdraw(trader, amount) {
+  var withdrawal = {
+    entryDate: new Date().toString(),
+    instrument: 'bank',
+    setup: 'withdrawal',
+    entryPrice: 0,
+    quantity: 0,
+    stopLoss: 0,
+    takeProfit: 0,
+    exitDate: new Date().toString(),
+    exitPrice: 0,
+    profit: -amount,
+    fees: 0,
+    buyOrSell: false,
+    comments: '',
+    isTransaction: true
+  }
+  return this.addTrade(trader, withdrawal);
+}
+
+//DEPOSIT BALANCE
+function deposit(trader, amount) {
+  var deposit = {
+    entryDate: new Date().toString(),
+    instrument: 'bank',
+    setup: 'deposit',
+    entryPrice: 0,
+    quantity: 0,
+    stopLoss: 0,
+    takeProfit: 0,
+    exitDate: new Date().toString(),
+    exitPrice: 0,
+    profit: amount,
+    fees: 0,
+    buyOrSell: false,
+    comments: '',
+    isTransaction: true
+  }
+  return this.addTrade(trader, deposit);
+}
+
 module.exports = {insertTrader, getAll, deleteTrader, getTrader,
-   deleteAll, updateBalance, addTrade, deleteTrade};
+   deleteAll, updateBalance, addTrade, deleteTrade, withdraw, deposit};

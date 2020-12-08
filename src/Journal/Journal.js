@@ -78,21 +78,24 @@ class Journal extends React.Component {
       if(trader.trades) {
 
         var trades = trader.trades.reverse().map(trade => {
-          return {
-            key: trade.tradeID,
-            instrument: trade.instrument,
-            strategy: trade.setup,
-            buyOrSell: trade.buyOrSell ? 'BUY' : 'SELL',
-            quantity: trade.quantity,
-            entry: trade.entryPrice,
-            exit: trade.exitPrice,
-            takeProfit: trade.takeProfit,
-            stopLoss: trade.stopLoss,
-            riskPercentage: '???',
-            fees: trade.fees,
-            gain: trade.profit,
-            hitOrigTP: this.checkIfTakeProfitHit(trade) ? "YES" : "NO",
+          if(!trade.isTransaction) {
+            return {
+              key: trade.tradeID,
+              instrument: trade.instrument,
+              strategy: trade.setup,
+              buyOrSell: trade.buyOrSell ? 'BUY' : 'SELL',
+              quantity: trade.quantity,
+              entry: trade.entryPrice,
+              exit: trade.exitPrice,
+              takeProfit: trade.takeProfit,
+              stopLoss: trade.stopLoss,
+              riskPercentage: '???',
+              fees: trade.fees,
+              gain: trade.profit,
+              hitOrigTP: this.checkIfTakeProfitHit(trade) ? "YES" : "NO",
+            }
           }
+          console.log(trades);
         });
       }
       console.log(this.state.hitOrigTP);

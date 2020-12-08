@@ -1,7 +1,6 @@
 import React from 'react';
 import { Chart } from 'chart.js';
 import axios from 'axios';
-//import { mapDate } from '../utils';
 
 class EquityGraph extends React.Component {
   constructor(props) {
@@ -28,19 +27,18 @@ class EquityGraph extends React.Component {
     //sum the gain/loss over that date,
     //push the sum into the equity.
     var latestDate = 0;
-    var dailySum = trader.data.trader[0].balance;
+    var dailySum = 0;
     var equityList = this.state.equity;
-    equityList.push(dailySum)
     var labelList = this.state.labels;
-    labelList.push(trades[0].entryDate.slice(0,10));
 
     for(var i=0; i<trades.length; i++) {
       var trade = trades[i];
+      trade.exitDate = new Date(trade.exitDate);
       dailySum += trade.profit;
-      if(this.mapDate(trade.exitDate) > latestDate) {
-        labelList.push(trade.exitDate.slice(0,10));
+      if(latestDate == 0 || trade.exitDate.getTime() > latestDate.getTime()) {
+        labelList.push(trade.exitDate.toString().slice(0,15));
         equityList.push(dailySum);
-        latestDate = this.mapDate(trade.exitDate.slice(0,10));
+        latestDate = trade.exitDate;
       } else {
         equityList.pop();
         equityList.push(dailySum);

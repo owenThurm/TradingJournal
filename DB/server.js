@@ -17,7 +17,6 @@ app.get('/', async (req, res) => {
     traders: trademans
   });
   res.end();
-  //res.send("HELLO");
 });
 
 //GET ONE TRADER
@@ -37,7 +36,6 @@ app.get('/:username', (req, res) => {
 app.get('/statistics/:username', (req, res) => {
   var username = req.params.username;
   traders.getTrader(username).then(response => {
-    //console.log(response[0].trades);
     var trades = response[0].trades;
     var wins = []
     var losses = []
@@ -48,7 +46,7 @@ app.get('/statistics/:username', (req, res) => {
     var averageLoser = 0;
     var sumWins = 0;
     var sumLosses = 0;
-    
+
     for(var i = 0; i < trades.length; i++) {
       if (trades[i].profit > 0) {
         wins.push(trades[i]);
@@ -99,9 +97,6 @@ app.get('/statistics/:username', (req, res) => {
 
 function calculateRiskReward(trade) {
 
-  //console.log("stop");
-  //console.log(typeof trade.stopLoss === 'number');
-
   var stop = parseFloat(trade.stopLoss);
   var exitPrice = parseFloat(trade.exitPrice);
   var entry = parseFloat(trade.entryPrice);
@@ -113,9 +108,7 @@ function calculateRiskReward(trade) {
   if (entry == stop) {
     return 0;
   }
-
-  return (exitPrice - entry) / (entry - stop)
-
+  return (exitPrice - entry) / (entry - stop);
 }
 
 //CREATE TRADER
@@ -123,6 +116,19 @@ app.post('/', (req, res) => {
 
   var aLec = req.body;
   console.log(aLec);
+  try {
+    var trades = aLec.trades.map(trade => {
+      trade.entryDate = new Date(trade.entryDate);
+      trade.exitDate = new Date(trade.exitDate);
+    });
+  } catch(e) {
+    res.status(500);
+    res.json({
+      error: 'Dates must be of format DD/MM/YYYY'
+    });
+  }
+
+  aLec.trades = trades;
 
   traders.insertTrader(aLec).then(response => {
     res.status(200);
@@ -155,6 +161,17 @@ app.post('/:username/balance', (req, res) => {
 app.post('/:username/trade', (req, res) => {
   var trade = req.body;
   var username = req.params.username;
+  try {
+    trade.entryDate = new Date(trade.entryDate);
+    trade.exitDate = new Date(trade.exitDate);
+  } catch(e) {
+    res.status(500);
+    res.json({
+      error: 'Dates must be of format DD/MM/YYYY'
+    });
+  }
+
+  console.log(trade);
 
   traders.addTrade(username, trade).then(response => {
     res.status(200);
@@ -194,6 +211,36 @@ app.delete('/:username/:tradeID', (req, res) => {
   }).catch(err => {
     console.log(err);
     res.json(err);
+  });
+});
+
+//WITHDRAW MONEY
+app.post('/:username/withdraw', (req, res) => {
+  var username = req.params.username;
+  var amount = req.body.amount;
+  traders.withdraw(username, amount).then(response => {
+    res.status(200);
+    res.json({
+      withdrew: amount
+    });
+  }).catch(err => {
+    res.status(500);
+    console.log(err);
+  });
+})
+
+//DEPOSIT MONEY
+app.post('/:username/deposit', (req, res) => {
+  var username = req.params.username;
+  var amount = req.body.amount;
+  traders.deposit(username, amount).then(response => {
+    res.status(200);
+    res.json({
+      deposited: amount
+    });
+  }).catch(err => {
+    res.status(500);
+    console.log(err);
   });
 });
 

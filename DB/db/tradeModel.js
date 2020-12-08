@@ -130,14 +130,14 @@ function insertTrader(trader) {
 //WITHDRAW BALANCE
 function withdraw(trader, amount) {
   var withdrawal = {
-    entryDate: new Date().toString(),
+    entryDate: new Date(),
     instrument: 'bank',
     setup: 'withdrawal',
     entryPrice: 0,
     quantity: 0,
     stopLoss: 0,
     takeProfit: 0,
-    exitDate: new Date().toString(),
+    exitDate: new Date(),
     exitPrice: 0,
     profit: -amount,
     fees: 0,
@@ -151,14 +151,14 @@ function withdraw(trader, amount) {
 //DEPOSIT BALANCE
 function deposit(trader, amount) {
   var deposit = {
-    entryDate: new Date().toString(),
+    entryDate: new Date(),
     instrument: 'bank',
     setup: 'deposit',
     entryPrice: 0,
     quantity: 0,
     stopLoss: 0,
     takeProfit: 0,
-    exitDate: new Date().toString(),
+    exitDate: new Date(),
     exitPrice: 0,
     profit: amount,
     fees: 0,

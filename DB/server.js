@@ -8,7 +8,6 @@ const port = 5000;
 app.use(bodyParser.json());
 const variable = 5;
 
-
 //GET ALL TRADERS
 app.get('/', async (req, res) => {
   var trademans = await traders.getAll();

@@ -78,9 +78,11 @@ class Journal extends React.Component {
 
         var trades = trader.trades.filter(trade => !trade.isTransaction);
 
+        var i = trades.length;
+
         trades = trades.reverse().map(trade => {
             return {
-              key: trade.tradeID,
+              key: i--,
               instrument: trade.instrument,
               strategy: trade.setup,
               buyOrSell: trade.buyOrSell ? 'BUY' : 'SELL',

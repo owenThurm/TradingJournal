@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Table, Input, InputNumber, Popconfirm, Form } from 'antd';
-import { DeleteOutlined } from '@ant-design/icons';
+import { DeleteOutlined, CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import axios from 'axios';
 const originData = [{name: 'harry'}];
 
@@ -99,14 +99,14 @@ const TradeTable = (props) => {
           entryDate: updatedRow.entryDate,
           instrument: updatedRow.instrument,
           setup: updatedRow.strategy,
-          entryPrice: updatedRow.entry,
-          quantity: updatedRow.quantity,
-          stopLoss: updatedRow.stopLoss,
-          takeProfit: updatedRow.takeProfit,
+          entryPrice: parseInt(updatedRow.entry),
+          quantity: parseInt(updatedRow.quantity),
+          stopLoss: parseInt(updatedRow.stopLoss),
+          takeProfit: parseInt(updatedRow.takeProfit),
           exitDate: updatedRow.exitDate,
-          exitPrice: updatedRow.exit,
-          profit: updatedRow.gain,
-          fees: updatedRow.fees,
+          exitPrice: parseInt(updatedRow.exit),
+          profit: parseInt(updatedRow.gain),
+          fees: parseInt(updatedRow.fees),
           buyOrSell: updatedRow.buyOrSell == 'true',
           comments: updatedRow.comments,
           isTransaction: false,
@@ -229,10 +229,10 @@ const TradeTable = (props) => {
                 marginRight: 8,
               }}
             >
-              Save
+              <CheckOutlined />
             </a>
             <a onClick={cancel} style={{marginRight: 8,}}>
-              Cancel
+              <CloseOutlined />
             </a>
             <Popconfirm title="Sure to delete?" onConfirm={() => deleteTrade(record.key)}>
               <a>
@@ -276,7 +276,7 @@ const TradeTable = (props) => {
         dataSource={data}
         columns={mergedColumns}
         rowClassName="editable-row"
-        scroll={{ x: 2500 }}
+        scroll={{ x: 2000 }}
         pagination={{
           onChange: cancel,
         }}

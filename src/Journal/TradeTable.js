@@ -71,7 +71,7 @@ const TradeTable = (props) => {
     console.log(id);
   }
 
-  //TODO: edits the trade
+  //Edits the trade
   const editTrade = async (id) => {
     console.log('editing trade: ' + id);
     console.log(id);
@@ -103,11 +103,7 @@ const TradeTable = (props) => {
           isTransaction: false,
         }
 
-
-
-
         //Axios update trade
-
         axios({
           method: 'POST',
           url: '/'+props.username+'/'+id+'/updatetrade',
@@ -115,15 +111,12 @@ const TradeTable = (props) => {
         }).then(response => {
           //Refresh table via this.props.onSubmit
           setEditingKey('');
-          console.log('API RESPONSE: ',response);
           props.onSubmit();
-
         }).catch(err => {
           console.log(err);
         });
-
       } else {
-        console.log('index was not in data???');
+        console.log('ERROR >>> index was not in data???');
       }
     } catch (errInfo) {
       console.log('validation failed ', errInfo);

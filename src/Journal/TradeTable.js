@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Table, Input, InputNumber, Popconfirm, Form } from 'antd';
-import { DeleteOutlined, CheckOutlined, CloseOutlined } from '@ant-design/icons';
+import { DeleteOutlined, CheckOutlined, CloseOutlined, EditOutlined } from '@ant-design/icons';
 import axios from 'axios';
 
 const EditableCell = ({
@@ -134,88 +134,108 @@ const TradeTable = (props) => {
       title: '#',
       dataIndex: 'key',
       editable: false,
-      fixed: 'left'
+      fixed: 'left',
+      align: 'center',
+      width: 50
     },
     {
       title: 'EntryDate',
       dataIndex: 'entryDate',
       editable: true,
-      fixed: 'left'
+      fixed: 'left',
+      align: 'center',
     },
     {
       title: 'ExitDate',
       dataIndex: 'exitDate',
-      editable: true
+      editable: true,
+      align: 'center',
+      fixed: 'left',
     },
     {
       title: 'Instrument',
       dataIndex: 'instrument',
-      editable: true
+      editable: true,
+      align: 'center',
     },
     {
       title: 'Strategy',
       dataIndex: 'strategy',
-      editable: true
+      editable: true,
+      align: 'center',
     },
     {
       title: 'Buy/Sell',
       dataIndex: 'buyOrSell',
-      editable: true
+      editable: true,
+      align: 'center',
     },
     {
       title: 'Quantity',
       dataIndex: 'quantity',
-      editable: true
+      editable: true,
+      align: 'center',
     },
     {
       title: 'Entry Price',
       dataIndex: 'entry',
-      editable: true
+      editable: true,
+      align: 'center',
     },
     {
       title: 'Exit Price',
       dataIndex: 'exit',
-      editable: true
+      editable: true,
+      align: 'center',
     },
     {
       title: 'Take Profit',
       dataIndex: 'takeProfit',
-      editable: true
+      editable: true,
+      align: 'center',
     },
     {
       title: 'Stop Loss',
       dataIndex: 'stopLoss',
-      editable: true
+      editable: true,
+      align: 'center',
     },
     {
       title: 'Risk %',
       dataIndex: 'riskPercentage',
-      editable: true
+      editable: true,
+      align: 'center',
     },
     {
       title: 'Fees',
       dataIndex: 'fees',
-      editable: true
+      editable: true,
+      align: 'center',
     },
     {
       title: 'Gain $',
       dataIndex: 'gain',
-      editable: true
+      editable: true,
+      align: 'center',
     },
     {
       title: 'Original TP Hit',
       dataIndex: 'hitOrigTP',
-      editable: true
+      editable: true,
+      align: 'center',
     },
     {
       title: 'Comments',
       dataIndex: 'comments',
       editable: true,
+      align: 'center',
     },
     {
       title: 'Edit',
       dataIndex: 'operation',
       fixed: 'right',
+      width: 100,
+      align: 'center',
       render: (_, record) => {
         const editable = isEditing(record);
         return editable ? (
@@ -239,7 +259,7 @@ const TradeTable = (props) => {
           </span>
         ) : (
           <a disabled={editingKey !== ''} onClick={() => edit(record)}>
-            Edit
+            <EditOutlined />
           </a>
         );
       },
@@ -269,7 +289,7 @@ const TradeTable = (props) => {
             cell: EditableCell,
           },
         }}
-        bordered
+
         dataSource={data}
         columns={mergedColumns}
         rowClassName="editable-row"

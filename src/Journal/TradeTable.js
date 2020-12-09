@@ -2,9 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Table, Input, InputNumber, Popconfirm, Form } from 'antd';
 import { DeleteOutlined, CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import axios from 'axios';
-const originData = [{name: 'harry'}];
-
-
 
 const EditableCell = ({
   editing,

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Table, Input, InputNumber, Popconfirm, Form } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
+import axios from 'axios';
 const originData = [{name: 'harry'}];
 
 
@@ -65,19 +66,69 @@ const TradeTable = (props) => {
   };
 
   //TODO: deletes the given trade
-  /*
   const deleteTrade = (id) => {
-
+    console.log('deleting trade: ' + id);
+    console.log(id);
   }
-  */
 
-  //TODO: edits the given trade
-  /*
-  const editTrade = (id, newTrade) {
+  //TODO: edits the trade
+  const editTrade = async (id) => {
+    console.log('editing trade: ' + id);
+    console.log(id);
+    try {
+      const row = await form.validateFields();
+      const newData = [...data];
+      const index = newData.findIndex(item => id === item.key);
 
+      if(index > -1) {
+        const item = newData[index];
+        newData.splice(index, 1, { ...item, ...row });
+        const updatedRow = newData[index];
+        console.log(updatedRow);
+
+        var newTrade = {
+          entryDate: updatedRow.entryDate,
+          instrument: updatedRow.instrument,
+          setup: updatedRow.strategy,
+          entryPrice: updatedRow.entry,
+          quantity: updatedRow.quantity,
+          stopLoss: updatedRow.stopLoss,
+          takeProfit: updatedRow.takeProfit,
+          exitDate: updatedRow.exitDate,
+          exitPrice: updatedRow.exit,
+          profit: updatedRow.gain,
+          fees: updatedRow.fees,
+          buyOrSell: updatedRow.buyOrSell == 'true',
+          comments: updatedRow.comments,
+          isTransaction: false,
+        }
+
+
+
+
+        //Axios update trade
+
+        axios({
+          method: 'POST',
+          url: '/'+props.username+'/'+id+'/updatetrade',
+          data: newTrade
+        }).then(response => {
+          //Refresh table via this.props.onSubmit
+          setEditingKey('');
+          console.log('API RESPONSE: ',response);
+          props.onSubmit();
+
+        }).catch(err => {
+          console.log(err);
+        });
+
+      } else {
+        console.log('index was not in data???');
+      }
+    } catch (errInfo) {
+      console.log('validation failed ', errInfo);
+    }
   }
-  */
-
 
   const save = async (key) => {
     try {
@@ -105,6 +156,16 @@ const TradeTable = (props) => {
       title: '#',
       dataIndex: 'key',
       editable: false
+    },
+    {
+      title: 'EntryDate',
+      dataIndex: 'entryDate',
+      editable: true
+    },
+    {
+      title: 'ExitDate',
+      dataIndex: 'exitDate',
+      editable: true
     },
     {
       title: 'Instrument',
@@ -167,6 +228,11 @@ const TradeTable = (props) => {
       editable: true
     },
     {
+      title: 'Comments',
+      dataIndex: 'comments',
+      editable: true,
+    },
+    {
       title: 'operation',
       dataIndex: 'operation',
       render: (_, record) => {
@@ -174,7 +240,7 @@ const TradeTable = (props) => {
         return editable ? (
           <span>
             <a
-              onClick={saveTrade}
+              onClick={() => editTrade(record.key)}
               style={{
                 marginRight: 8,
               }}

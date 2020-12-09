@@ -1,5 +1,4 @@
 import React from 'react';
-import { Table } from 'antd';
 import AddTrade from './AddTrade';
 import axios from 'axios';
 import TradeTable from './TradeTable';
@@ -29,7 +28,9 @@ class Journal extends React.Component {
 
       trades = trades.reverse().map(trade => {
           return {
-            key: i--,
+            key: trade.tradeID,
+            entryDate: trade.entryDate.slice(0,10),
+            exitDate: trade.exitDate.slice(0,10),
             instrument: trade.instrument,
             strategy: trade.setup,
             buyOrSell: trade.buyOrSell ? 'BUY' : 'SELL',
@@ -41,6 +42,7 @@ class Journal extends React.Component {
             riskPercentage: '???',
             fees: trade.fees,
             gain: trade.profit,
+            comments: trade.comments,
             hitOrigTP: this.checkIfTakeProfitHit(trade) ? "YES" : "NO"
         }
       });
@@ -77,7 +79,7 @@ class Journal extends React.Component {
           this.refreshTrades();
           } }/>
         <br/>
-        <TradeTable trades={this.state.trades}/>
+        <TradeTable username={this.state.username} trades={this.state.trades} onSubmit={this.refreshTrades}/>
       </div>
     )
   }

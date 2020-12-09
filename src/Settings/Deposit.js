@@ -4,6 +4,7 @@ import axios from 'axios';
 import { isNumber } from '../utils';
 
 export const Deposit = props => {
+  const [form] = Form.useForm();
   console.log(props);
   const onFinish = values => {
     console.log('Success', values);
@@ -17,6 +18,7 @@ export const Deposit = props => {
     }).then(response => {
       console.log(response);
       console.log('hi');
+      form.resetFields();
     }).catch(err => {
       console.log(err);
     });
@@ -25,7 +27,7 @@ export const Deposit = props => {
   return (
     <Card style={{width: 1139, height: 550}}>
       Deposit
-      <Form onFinish={onFinish}>
+      <Form onFinish={onFinish} form={form}>
         <Form.Item name='Deposit' rules={[{
           required: true,
           message: 'Enter a Deposit Value',

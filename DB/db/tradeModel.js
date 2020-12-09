@@ -91,7 +91,6 @@ async function deleteTrade(name, tradeID) {
       var trade = newList[i];
       if(trade.tradeID > tradeID) trade.tradeID--;
     };
-    console.log(newList);
     return newList;
   }).catch(err => {
     console.log(err);
@@ -148,6 +147,11 @@ function withdraw(trader, amount) {
   return this.addTrade(trader, withdrawal);
 }
 
+async function updateTrade(trader, tradeID, newTrade) {
+  await this.deleteTrade(trader, tradeID);
+  return this.addTrade(trader, newTrade);
+}
+
 //DEPOSIT BALANCE
 function deposit(trader, amount) {
   var deposit = {
@@ -170,4 +174,4 @@ function deposit(trader, amount) {
 }
 
 module.exports = {insertTrader, getAll, deleteTrader, getTrader,
-   deleteAll, updateBalance, addTrade, deleteTrade, withdraw, deposit};
+   deleteAll, updateBalance, addTrade, deleteTrade, withdraw, deposit, updateTrade};

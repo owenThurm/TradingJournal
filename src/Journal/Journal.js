@@ -2,6 +2,7 @@ import React from 'react';
 import { Table } from 'antd';
 import AddTrade from './AddTrade';
 import axios from 'axios';
+import TradeTable from './TradeTable';
 
 class Journal extends React.Component {
 
@@ -11,100 +12,41 @@ class Journal extends React.Component {
       username: 'Alec',
       trades: []
     }
-    this.columns =  [
-      {
-        title: '#',
-        dataIndex: 'key',
-      },
-      {
-        title: 'Instrument',
-        dataIndex: 'instrument',
-      },
-      {
-        title: 'Strategy',
-        dataIndex: 'strategy',
-      },
-      {
-        title: 'Buy/Sell',
-        dataIndex: 'buyOrSell',
-      },
-      {
-        title: 'Quantity',
-        dataIndex: 'quantity',
-      },
-      {
-        title: 'Entry Price',
-        dataIndex: 'entry',
-      },
-      {
-        title: 'Exit Price',
-        dataIndex: 'exit',
-      },
-      {
-        title: 'Take Profit',
-        dataIndex: 'takeProfit',
-      },
-      {
-        title: 'Stop Loss',
-        dataIndex: 'stopLoss',
-      },
-      {
-        title: 'Risk %',
-        dataIndex: 'riskPercentage',
-      },
-      {
-        title: 'Fees',
-        dataIndex: 'fees',
-      },
-      {
-        title: 'Gain $',
-        dataIndex: 'gain',
-      },
-      {
-        title: 'Original TP Hit',
-        dataIndex: 'hitOrigTP',
-      },
-    ];
   }
 
   componentDidMount = () => {
     this.refreshTrades();
   }
 
-  refreshTrades = () => {
-    axios.get('/'+this.state.username).then(response => {
-      var trader = response.data.trader[0];
-      if(trader.trades) {
+  refreshTrades = async () => {
+    var trader = await (await axios.get('/'+this.state.username)).data.trader[0];
+    console.log(trader);
+    if(trader.trades) {
 
-        var trades = trader.trades.filter(trade => !trade.isTransaction);
+      var trades = trader.trades.filter(trade => !trade.isTransaction);
 
-        var i = trades.length;
+      var i = trades.length;
 
-        trades = trades.reverse().map(trade => {
-            return {
-              key: i--,
-              instrument: trade.instrument,
-              strategy: trade.setup,
-              buyOrSell: trade.buyOrSell ? 'BUY' : 'SELL',
-              quantity: trade.quantity,
-              entry: trade.entryPrice,
-              exit: trade.exitPrice,
-              takeProfit: trade.takeProfit,
-              stopLoss: trade.stopLoss,
-              riskPercentage: '???',
-              fees: trade.fees,
-              gain: trade.profit,
-              hitOrigTP: this.checkIfTakeProfitHit(trade) ? "YES" : "NO"
-          }
-        });
-        console.log(trades);
-      }
-      console.log(this.state.hitOrigTP);
-      this.setState({
-        trades: trades
+      trades = trades.reverse().map(trade => {
+          return {
+            key: i--,
+            instrument: trade.instrument,
+            strategy: trade.setup,
+            buyOrSell: trade.buyOrSell ? 'BUY' : 'SELL',
+            quantity: trade.quantity,
+            entry: trade.entryPrice,
+            exit: trade.exitPrice,
+            takeProfit: trade.takeProfit,
+            stopLoss: trade.stopLoss,
+            riskPercentage: '???',
+            fees: trade.fees,
+            gain: trade.profit,
+            hitOrigTP: this.checkIfTakeProfitHit(trade) ? "YES" : "NO"
+        }
       });
-    }).catch(err => {
-      console.log(err);
+    }
+    this.setState({
+      trades: trades
     });
   }
 
@@ -118,7 +60,6 @@ class Journal extends React.Component {
 
     // Handle buy case
     // Exit should be equal to or higher than exit price
-    console.log("here");
     if (trade.buyOrSell) {
       return trade.exitPrice >= trade.takeProfit;
     }
@@ -127,8 +68,6 @@ class Journal extends React.Component {
     else {
       return trade.exitPrice <= trade.takeProfit;
     }
-
-
   }
 
   render() {
@@ -138,7 +77,7 @@ class Journal extends React.Component {
           this.refreshTrades();
           } }/>
         <br/>
-        <Table dataSource={this.state.trades} columns={this.columns}/>
+        <TradeTable trades={this.state.trades}/>
       </div>
     )
   }

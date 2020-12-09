@@ -4,7 +4,7 @@ import { isNumber } from '../utils';
 import axios from 'axios';
 
 export const Withdraw = props => {
-
+  const [form] = Form.useForm();
   const onFinish = values => {
     console.log('success', values);
     axios({
@@ -16,6 +16,7 @@ export const Withdraw = props => {
     }).then(response => {
       console.log(response);
       console.log('hello');
+      form.resetFields();
     }).catch(err => {
       console.log(err);
     });
@@ -24,7 +25,7 @@ export const Withdraw = props => {
   return (
     <Card style={{width: 1139, height: 550}}>
       Withdraw
-      <Form onFinish={onFinish}>
+      <Form onFinish={onFinish} form={form}>
         <Form.Item name='Withdraw' rules={[{
           required: true,
           message: 'Enter a Withdraw Value',

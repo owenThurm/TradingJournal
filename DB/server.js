@@ -10,7 +10,6 @@ const variable = 5;
 //GET ALL TRADERS
 app.get('/', async (req, res) => {
   var trademans = await traders.getAll();
-  console.log(trademans);
   res.json({
     traders: trademans
   });
@@ -56,7 +55,6 @@ app.get('/statistics/:username', (req, res) => {
       }
       else breakeven.push(trades[i]);
 
-      console.log(calculateRiskReward(trades[i]));
       averageR += calculateRiskReward(trades[i])
       sumR += calculateRiskReward(trades[i]);
 
@@ -99,10 +97,6 @@ function calculateRiskReward(trade) {
   var exitPrice = parseFloat(trade.exitPrice);
   var entry = parseFloat(trade.entryPrice);
 
-  console.log("stop" + stop);
-  console.log("exit" + exitPrice);
-  console.log("entry" + entry);
-
   if (entry == stop) {
     return 0;
   }
@@ -113,7 +107,6 @@ function calculateRiskReward(trade) {
 app.post('/', (req, res) => {
 
   var aLec = req.body;
-  console.log(aLec);
   try {
     var trades = aLec.trades.map(trade => {
       trade.entryDate = new Date(trade.entryDate);
@@ -169,8 +162,6 @@ app.post('/:username/trade', (req, res) => {
     });
   }
 
-  console.log(trade);
-
   traders.addTrade(username, trade).then(response => {
     res.status(200);
     res.json({
@@ -212,11 +203,41 @@ app.delete('/:username/:tradeID', (req, res) => {
   });
 });
 
+app.post('/:username/:tradeID/updatetrade', (req, res) => {
+  var username = req.params.username;
+
+  var tradeID = req.params.tradeID;
+  var newTrade = req.body;
+
+  try {
+    newTrade.entryDate = new Date(newTrade.entryDate);
+    newTrade.exitDate = new Date(newTrade.exitDate);
+  } catch(e) {
+    res.status(500);
+    res.json({
+      error: 'Dates must be of format DD/MM/YYYY'
+    });
+  }
+
+  traders.updateTrade(username, tradeID, newTrade).then(response => {
+    res.status(200);
+    res.json({
+      updated: tradeID,
+      now: newTrade
+    });
+  }).catch(err => {
+    console.log(err);
+    res.status(500);
+    res.json({
+      error: err
+    });
+  });
+});
+
 //WITHDRAW MONEY
 app.post('/:username/withdraw', (req, res) => {
   var username = req.params.username;
   var amount = req.body.amount;
-  console.log(amount);
   traders.withdraw(username, amount).then(response => {
     res.status(200);
     res.json({

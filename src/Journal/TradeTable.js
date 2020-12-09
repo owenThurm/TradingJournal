@@ -67,14 +67,24 @@ const TradeTable = (props) => {
 
   //TODO: deletes the given trade
   const deleteTrade = (id) => {
-    console.log('deleting trade: ' + id);
-    console.log(id);
+    //AXIOS delete trade endpoint
+    axios({
+      method: 'DELETE',
+      url: '/' + props.username + '/' + id,
+    }).then(response => {
+      console.log('API RESPONSE: <<', response);
+      setEditingKey('');
+      props.onSubmit();
+    }).catch(err => {
+      console.log('ERROR: axios delete error: ', err);
+    });
+
+
+
   }
 
   //Edits the trade
   const editTrade = async (id) => {
-    console.log('editing trade: ' + id);
-    console.log(id);
     try {
       const row = await form.validateFields();
       const newData = [...data];
@@ -84,7 +94,6 @@ const TradeTable = (props) => {
         const item = newData[index];
         newData.splice(index, 1, { ...item, ...row });
         const updatedRow = newData[index];
-        console.log(updatedRow);
 
         var newTrade = {
           entryDate: updatedRow.entryDate,
@@ -122,27 +131,6 @@ const TradeTable = (props) => {
       console.log('validation failed ', errInfo);
     }
   }
-
-  const save = async (key) => {
-    try {
-      const row = await form.validateFields();
-      const newData = [...data];
-      const index = newData.findIndex((item) => key === item.key);
-
-      if (index > -1) {
-        const item = newData[index];
-        newData.splice(index, 1, { ...item, ...row });
-        setData(newData);
-        setEditingKey('');
-      } else {
-        newData.push(row);
-        setData(newData);
-        setEditingKey('');
-      }
-    } catch (errInfo) {
-      console.log('Validate Failed:', errInfo);
-    }
-  };
 
   const columns = [
     {
@@ -243,7 +231,7 @@ const TradeTable = (props) => {
             <a onClick={cancel}>
               Cancel
             </a>
-            <Popconfirm title="Sure to delete?" onConfirm={deleteTrade}>
+            <Popconfirm title="Sure to delete?" onConfirm={() => deleteTrade(record.key)}>
               <a>
                 <DeleteOutlined />
               </a>

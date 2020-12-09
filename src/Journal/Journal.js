@@ -19,7 +19,6 @@ class Journal extends React.Component {
 
   refreshTrades = async () => {
     var trader = await (await axios.get('/'+this.state.username)).data.trader[0];
-    console.log(trader);
     if(trader.trades) {
 
       var trades = trader.trades.filter(trade => !trade.isTransaction);

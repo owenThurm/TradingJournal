@@ -203,6 +203,7 @@ app.delete('/:username/:tradeID', (req, res) => {
   });
 });
 
+//UPDATE TRADE
 app.post('/:username/:tradeID/updatetrade', (req, res) => {
   var username = req.params.username;
 

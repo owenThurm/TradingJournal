@@ -213,7 +213,7 @@ const TradeTable = (props) => {
       editable: true,
     },
     {
-      title: 'edit',
+      title: 'Edit',
       dataIndex: 'operation',
       fixed: 'right',
       render: (_, record) => {

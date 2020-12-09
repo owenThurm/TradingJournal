@@ -136,12 +136,14 @@ const TradeTable = (props) => {
     {
       title: '#',
       dataIndex: 'key',
-      editable: false
+      editable: false,
+      fixed: 'left'
     },
     {
       title: 'EntryDate',
       dataIndex: 'entryDate',
-      editable: true
+      editable: true,
+      fixed: 'left'
     },
     {
       title: 'ExitDate',
@@ -214,8 +216,9 @@ const TradeTable = (props) => {
       editable: true,
     },
     {
-      title: 'operation',
+      title: 'edit',
       dataIndex: 'operation',
+      fixed: 'right',
       render: (_, record) => {
         const editable = isEditing(record);
         return editable ? (
@@ -228,7 +231,7 @@ const TradeTable = (props) => {
             >
               Save
             </a>
-            <a onClick={cancel}>
+            <a onClick={cancel} style={{marginRight: 8,}}>
               Cancel
             </a>
             <Popconfirm title="Sure to delete?" onConfirm={() => deleteTrade(record.key)}>
@@ -273,6 +276,7 @@ const TradeTable = (props) => {
         dataSource={data}
         columns={mergedColumns}
         rowClassName="editable-row"
+        scroll={{ x: 2500 }}
         pagination={{
           onChange: cancel,
         }}

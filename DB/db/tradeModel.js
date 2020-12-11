@@ -23,6 +23,7 @@ const traderSchema = Joi.object().keys({
   username: Joi.string().alphanum().min(3).max(12).required(),
   password: Joi.string().min(6).required(),
   balance: Joi.number().strict().required(),
+  setups: Joi.array().items(Joi.string()).allow(null).required(),
   trades: Joi.array().items(tradeSchema).required()
 });
 
@@ -62,6 +63,21 @@ async function addTrade(name, trade) {
     return traders.findOneAndUpdate({username: name},
       { $set: { trades: newTradeList } });
   }
+}
+
+async function addSetup(name, setup) {
+  var trader = await getTrader(name);
+  var setups = trader[0].setups;
+  setups.push(setup);
+
+  return traders.findOneAndUpdate({username: name},
+     { $set: { setups: setups } });
+}
+
+async function getSetups(name) {
+  var trader = await getTrader(name);
+  console.log(trader);
+  return trader[0].setups;
 }
 
 //Insert a trade into a list of trades according to date.
@@ -174,4 +190,4 @@ function deposit(trader, amount) {
 }
 
 module.exports = {insertTrader, getAll, deleteTrader, getTrader,
-   deleteAll, updateBalance, addTrade, deleteTrade, withdraw, deposit, updateTrade};
+   deleteAll, updateBalance, addTrade, deleteTrade, withdraw, deposit, updateTrade, getSetups, addSetup};

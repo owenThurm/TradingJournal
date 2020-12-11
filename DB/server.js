@@ -111,6 +111,7 @@ app.post('/', (req, res) => {
     var trades = aLec.trades.map(trade => {
       trade.entryDate = new Date(trade.entryDate);
       trade.exitDate = new Date(trade.exitDate);
+      return trade;
     });
   } catch(e) {
     res.status(500);
@@ -264,6 +265,45 @@ app.post('/:username/deposit', (req, res) => {
     console.log(err);
   });
 });
+
+//POST TRADER SETUPS
+app.post('/:username/setup', (req, res) => {
+  var username = req.params.username;
+  var setup = req.body.setup;
+
+  traders.addSetup(username, setup).then(response => {
+    res.status(200);
+    res.json({
+      added: setup
+    });
+  }).catch(err => {
+    console.log(err);
+    res.status(500);
+    res.json({
+      error: err
+    });
+  });
+});
+
+//GET TRADER SETUPS
+app.get('/:username/setups', (req, res) => {
+  var username = req.params.username;
+
+  traders.getSetups(username).then(response => {
+    console.log(response);
+    res.status(200);
+    res.json({
+      setups: response
+    });
+  }).catch(err => {
+    console.log(err);
+    res.status(500);
+    res.json({
+      error: err
+    });
+  });
+});
+
 
 //WARNING: DELETE EVERYONE
 app.delete('/', (req, res) => {

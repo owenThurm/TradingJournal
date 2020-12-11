@@ -9,16 +9,30 @@ class Journal extends React.Component {
     super(props);
     this.state = {
       username: 'Alec',
-      trades: []
+      trades: [],
+      setups: []
     }
   }
 
   componentDidMount = () => {
     this.refreshTrades();
+    //AXIOS GET -> IF empty set to default setups
+    axios({
+      method: 'GET',
+      url: '/'+ this.state.username + '/setups',
+    }).then(response => {
+      console.log(response);
+      this.setState({
+        setups: response.data.setups
+      });
+    }).catch(err => {
+      console.log('Error>>>', err);
+    });
   }
 
   refreshTrades = async () => {
-    var trader = await (await axios.get('/'+this.state.username)).data.trader[0];
+    var trader = await axios.get('/'+this.state.username);
+    trader = trader.data.trader[0];
     if(trader.trades) {
 
       var trades = trader.trades.filter(trade => !trade.isTransaction);
@@ -74,11 +88,11 @@ class Journal extends React.Component {
   render() {
     return(
       <div style={{margin: "20px"}}>
-        <AddTrade onNewTrade={() => {
+        <AddTrade setups={this.state.setups} onNewTrade={() => {
           this.refreshTrades();
           } }/>
         <br/>
-        <TradeTable username={this.state.username} trades={this.state.trades} onSubmit={this.refreshTrades}/>
+        <TradeTable setups={this.state.setups} username={this.state.username} trades={this.state.trades} onSubmit={this.refreshTrades}/>
       </div>
     )
   }

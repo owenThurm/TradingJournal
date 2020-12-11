@@ -4,6 +4,7 @@ import { Modal, Button, Input,
 import { CloseOutlined, CheckOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import { isNumber } from '../utils';
+import SetupPicker from './SetupPicker';
 
 class AddTrade extends React.Component {
   formRef = React.createRef();
@@ -102,7 +103,7 @@ class AddTrade extends React.Component {
   //parses new values for update
   handleUpdate = (update, type) => {
     var value = null;
-    if(typeof(update) == 'boolean') value = update;
+    if(typeof(update) == 'boolean' || typeof(update) == 'string') value = update;
     else if(update._isAMomentObject) value = update._d;
     else value = update.target.value;
 
@@ -125,6 +126,7 @@ class AddTrade extends React.Component {
         }, () => { console.log(this.state)});
         break;
       case 'setup':
+        console.log(value);
         this.setState({
           setup: value
         }, () => { console.log(this.state)});
@@ -226,9 +228,7 @@ class AddTrade extends React.Component {
                         required: true,
                         message: 'Input description for Setup!'
                         }]} style={{width: 500, marginBottom: 0 }}>
-                        <Input placeholder={'setup'} onChange={
-                          event => { this.handleUpdate(event, 'setup'); }
-                        }/>
+                        <SetupPicker setups={this.props.setups} onChange={event => { this.handleUpdate(event, 'setup')} } style={{width: 100}}/>
                     </Form.Item>
                   </Row>
                   <Row gutter={[0, -10]}>

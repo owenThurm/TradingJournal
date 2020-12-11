@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { Table, Input, InputNumber, Popconfirm, Form } from 'antd';
+import React, { useEffect, useState, useRef } from 'react';
+import { Table, Input, InputNumber, Popconfirm, Form, Button, Space } from 'antd';
 import { DeleteOutlined, CheckOutlined, CloseOutlined, EditOutlined } from '@ant-design/icons';
 import axios from 'axios';
+import { SearchOutlined } from '@ant-design/icons';
 
 const EditableCell = ({
   editing,
@@ -43,6 +44,9 @@ const TradeTable = (props) => {
   const [data, setData] = useState(props.trades);
   const [editingKey, setEditingKey] = useState('');
   const isEditing = (record) => record.key === editingKey;
+  const [searchText, setSearchText] = useState('');
+  const [searchedColumn, setSearchedColumn] = useState('');
+  const searchInput = useRef(null);
 
   const edit = (record) => {
     form.setFieldsValue({
@@ -129,6 +133,57 @@ const TradeTable = (props) => {
     }
   }
 
+  const getColumnSearchProps = dataIndex => ({
+    filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
+      <div style={{ padding: 8 }}>
+        <Input
+          ref={ searchInput }
+          placeholder={`Search ${dataIndex}`}
+          value={selectedKeys[0]}
+          onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+          onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
+          style={{ width: 188, marginBottom: 8, display: 'block' }}
+        />
+        <Space>
+          <Button
+            type="primary"
+            onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
+            icon={<SearchOutlined />}
+            size="small"
+            style={{ width: 90 }}
+          >
+            Search
+          </Button>
+          <Button onClick={() => handleReset(clearFilters)} size="small" style={{ width: 90 }}>
+            Reset
+          </Button>
+        </Space>
+      </div>
+    ),
+    filterIcon: filtered => <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />,
+    onFilter: (value, record) =>
+      record[dataIndex]
+        ? record[dataIndex].toString().toLowerCase().includes(value.toLowerCase())
+        : '',
+    onFilterDropdownVisibleChange: visible => {
+      if (visible) {
+        setTimeout(() => searchInput.current.select(), 100);
+      }
+    },
+    render: text => text
+  });
+
+  function handleSearch(selectedKeys, confirm, dataIndex) {
+    confirm();
+    setSearchText(selectedKeys[0]);
+    setSearchedColumn(dataIndex);
+  };
+
+  function handleReset(clearFilters) {
+    clearFilters();
+    setSearchText('');
+  };
+
   const columns = [
     {
       title: '#',
@@ -157,18 +212,34 @@ const TradeTable = (props) => {
       dataIndex: 'instrument',
       editable: true,
       align: 'center',
+      ...getColumnSearchProps('instrument'),
     },
     {
       title: 'Strategy',
       dataIndex: 'strategy',
       editable: true,
       align: 'center',
+      filters: props.setups.map(setup => {
+        return {
+          text: setup,
+          value: setup
+        }
+      }),
+      onFilter: (value, record) => record.strategy.indexOf(value) === 0,
     },
     {
       title: 'Buy/Sell',
       dataIndex: 'buyOrSell',
       editable: true,
       align: 'center',
+      filters: [{
+        text: 'Buy',
+        value: 'BUY'
+      }, {
+        text: 'Sell',
+        value: 'SELL'
+      }],
+      onFilter: (value, record) => record.buyOrSell.indexOf(value) === 0,
     },
     {
       title: 'Quantity',

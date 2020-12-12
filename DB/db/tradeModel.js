@@ -16,6 +16,7 @@ const tradeSchema = Joi.object().keys({
   fees: Joi.number().strict().required(),
   buyOrSell: Joi.boolean().strict().required(),
   comments: Joi.string().allow(null).allow(''),
+  screenshot: Joi.string(),
   isTransaction: Joi.boolean().strict().required()
 });
 
@@ -163,6 +164,7 @@ function withdraw(trader, amount) {
   return this.addTrade(trader, withdrawal);
 }
 
+//UPDATE TRADE
 async function updateTrade(trader, tradeID, newTrade) {
   await this.deleteTrade(trader, tradeID);
   return this.addTrade(trader, newTrade);

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Modal, Button, Input,
-   Row, Col, Form, Card, DatePicker, Switch } from 'antd';
+   Row, Col, Form, Card, DatePicker, Switch, Upload } from 'antd';
 import { CloseOutlined, CheckOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import { isNumber } from '../utils';
@@ -26,6 +26,7 @@ class AddTrade extends React.Component {
       profit: null,
       fees: null,
       comments: null,
+      screenshot: null,
     };
   }
 
@@ -38,12 +39,6 @@ class AddTrade extends React.Component {
   handleSubmitTrade = () => {
     //POST axios request to our express api.
     //access trade info via state.
-    console.log(this.state.entryDate);
-    console.log(this.state.exitDate);
-    console.log(this.state.exitDate.getMonth());
-    console.log(this.state.exitDate.getDay());
-    console.log(this.state.exitDate.getYear());
-    console.log(this.state.exitDate.getMonth()+1+'-'+this.state.exitDate.getDate()+'-'+this.state.exitDate.getFullYear());
     axios({
       method: 'POST',
       url: '/' + this.state.username + '/trade',
@@ -61,7 +56,8 @@ class AddTrade extends React.Component {
         fees: parseInt(this.state.fees),
         buyOrSell: this.state.buyOrSell,
         comments: this.state.comments ? this.state.comments : "",
-        isTransaction: false
+        isTransaction: false,
+        screenshot: this.state.screenshot,
       }
     }).then(response => {
       this.setState({
@@ -78,6 +74,7 @@ class AddTrade extends React.Component {
         profit: null,
         fees: null,
         comments: null,
+        screenshot: null,
       });
       this.props.onNewTrade();
       console.log('about to validate');
@@ -179,6 +176,11 @@ class AddTrade extends React.Component {
       case 'comments':
         this.setState({
           comments: value
+        }, () => { console.log(this.state)});
+        break;
+      case 'screenshot':
+        this.setState({
+          screenshot: value
         }, () => { console.log(this.state)});
         break;
       default:
@@ -350,6 +352,14 @@ class AddTrade extends React.Component {
               <Input placeholder="Got stopped out should play around with stop placement."
               onChange={ event => { this.handleUpdate(event, 'comments') }
               }/>
+            </Form.Item>
+            <h3>Trade Screenshot</h3>
+            <Form.Item name="screenshot" rules={[{
+              required: false
+            }]}>
+              <Upload onChange={event => {console.log(event)}}>
+                <Button>Upload</Button>
+              </Upload>
             </Form.Item>
           </Form>
         </Modal>

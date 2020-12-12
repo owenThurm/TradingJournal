@@ -304,7 +304,6 @@ app.get('/:username/setups', (req, res) => {
   });
 });
 
-
 //WARNING: DELETE EVERYONE
 app.delete('/', (req, res) => {
   traders.deleteAll().then(response => {

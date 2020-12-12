@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Table, Input, InputNumber, Popconfirm, Form, Button, Space } from 'antd';
+import { Table, Input, InputNumber, Popconfirm, Form, Button, Space, Modal } from 'antd';
 import { DeleteOutlined, CheckOutlined, CloseOutlined, EditOutlined } from '@ant-design/icons';
 import axios from 'axios';
-import { SearchOutlined } from '@ant-design/icons';
+import { SearchOutlined, ExpandOutlined } from '@ant-design/icons';
 
 const EditableCell = ({
   editing,
@@ -43,7 +43,9 @@ const TradeTable = (props) => {
   const [form] = Form.useForm();
   const [data, setData] = useState(props.trades);
   const [editingKey, setEditingKey] = useState('');
+  const [viewingKey, setViewingKey] = useState('');
   const isEditing = (record) => record.key === editingKey;
+  const isViewing = (record) => record.key === viewingKey;
   const [searchText, setSearchText] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('');
   const searchInput = useRef(null);
@@ -311,6 +313,21 @@ const TradeTable = (props) => {
       dataIndex: 'comments',
       editable: true,
       align: 'center',
+      render: (_, record) => {
+        const viewable = isViewing(record);
+        console.log(record)
+        return viewable ? (
+          <Modal visible={viewable}
+          onOk={() => {setViewingKey('')}}
+          onCancel={() => {setViewingKey('')}}>
+            {record.comments}
+          </Modal>
+        ) : (
+          <a onClick={() => setViewingKey(record.key)}>
+            <ExpandOutlined />
+          </a>
+        )
+      }
     },
     {
       title: 'Edit',

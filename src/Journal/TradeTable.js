@@ -199,6 +199,7 @@ const TradeTable = (props) => {
       editable: true,
       fixed: 'left',
       align: 'center',
+      sorter: (a, b) => new Date(a.entryDate).getTime() - new Date(b.entryDate).getTime()
     },
     {
       title: 'ExitDate',
@@ -206,6 +207,7 @@ const TradeTable = (props) => {
       editable: true,
       align: 'center',
       fixed: 'left',
+      sorter: (a, b) => new Date(a.exitDate).getTime() - new Date(b.exitDate).getTime()
     },
     {
       title: 'Instrument',
@@ -246,54 +248,63 @@ const TradeTable = (props) => {
       dataIndex: 'quantity',
       editable: true,
       align: 'center',
+      sorter: (a, b) => a.quantity - b.quantity
     },
     {
       title: 'Entry Price',
       dataIndex: 'entry',
       editable: true,
       align: 'center',
+      sorter: (a, b) => a.entry - b.entry
     },
     {
       title: 'Exit Price',
       dataIndex: 'exit',
       editable: true,
       align: 'center',
+      sorter: (a, b) => a.exit - b.exit
     },
     {
       title: 'Take Profit',
       dataIndex: 'takeProfit',
       editable: true,
       align: 'center',
+      sorter: (a, b) => a.takeProfit - b.takeProfit
     },
     {
       title: 'Stop Loss',
       dataIndex: 'stopLoss',
       editable: true,
       align: 'center',
+      sorter: (a, b) => a.stopLoss - b.stopLoss
     },
     {
       title: 'Risk %',
       dataIndex: 'riskPercentage',
       editable: true,
       align: 'center',
+      sorter: (a, b) => a.risk - b.risk
     },
     {
       title: 'Fees',
       dataIndex: 'fees',
       editable: true,
       align: 'center',
+      sorter: (a, b) => a.fees - b.fees
     },
     {
       title: 'Gain $',
       dataIndex: 'gain',
       editable: true,
       align: 'center',
+      sorter: (a, b) => a.gain - b.gain
     },
     {
       title: 'Original TP Hit',
       dataIndex: 'hitOrigTP',
       editable: true,
       align: 'center',
+      sorter: (a, b) => a.hitOrigTP == 'YES' ? 1 : -1
     },
     {
       title: 'Comments',

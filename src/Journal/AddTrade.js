@@ -1,6 +1,6 @@
 import React from 'react';
 import { Modal, Button, Input,
-   Row, Col, Form, Card, DatePicker, Switch, Upload } from 'antd';
+   Row, Col, Form, Card, DatePicker, Switch, Upload, message } from 'antd';
 import { CloseOutlined, CheckOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import { isNumber } from '../utils';
@@ -188,6 +188,41 @@ class AddTrade extends React.Component {
     }
   }
 
+  getBase64 = (img, callback) => {
+    const reader = new FileReader();
+    reader.addEventListener('load', () => callback(reader.result));
+    reader.readAsDataURL(img);
+  }
+
+  validPicture = (file) => {
+    const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+    if (!isJpgOrPng) {
+      message.error('You can only upload JPG/PNG file!');
+      console.log('')
+    }
+    const isLt2M = file.size / 1024 / 1024 < 2;
+    if (!isLt2M) {
+      message.error('Image must smaller than 2MB!');
+    }
+    return isJpgOrPng && isLt2M;
+  }
+
+  beforeUpload = info => {
+    console.log(info);
+    if(this.validPicture(info)) {
+      console.log('success')
+      this.getBase64(info, response => {
+        console.log(response);
+        this.setState({
+          screenshot: response
+        }, () => {console.log(this.state)});
+      });
+    }
+    return false;
+  }
+
+
+
   render() {
     return(
       <div>
@@ -357,7 +392,7 @@ class AddTrade extends React.Component {
             <Form.Item name="screenshot" rules={[{
               required: false
             }]}>
-              <Upload onChange={event => {console.log(event)}}>
+              <Upload beforeUpload={this.beforeUpload} action={(file) => {console.log('called', file)}} onChange={this.handleUpload}>
                 <Button>Upload</Button>
               </Upload>
             </Form.Item>

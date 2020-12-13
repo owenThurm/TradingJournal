@@ -4,8 +4,10 @@ const bodyParser = require('body-parser');
 
 const app = Express();
 const port = 5000;
-app.use(bodyParser.json());
 const variable = 5;
+
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 
 //GET ALL TRADERS
 app.get('/', async (req, res) => {

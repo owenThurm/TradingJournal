@@ -3,6 +3,7 @@ import { Table, Input, InputNumber, Popconfirm, Form, Button, Space, Modal } fro
 import { DeleteOutlined, CheckOutlined, CloseOutlined, EditOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import { SearchOutlined, ExpandOutlined } from '@ant-design/icons';
+import CommentsModal from './CommentsModal';
 
 const EditableCell = ({
   editing,
@@ -49,6 +50,8 @@ const TradeTable = (props) => {
   const [searchText, setSearchText] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('');
   const searchInput = useRef(null);
+
+  console.log(data);
 
   const edit = (record) => {
     form.setFieldsValue({
@@ -311,17 +314,16 @@ const TradeTable = (props) => {
     {
       title: 'Comments',
       dataIndex: 'comments',
-      editable: true,
+      editable: false,
       align: 'center',
       render: (_, record) => {
         const viewable = isViewing(record);
-        console.log(record)
+        console.log('record:', record)
+        var image = new Image();
+        image.src = record.screenshot;
+
         return viewable ? (
-          <Modal visible={viewable}
-          onOk={() => {setViewingKey('')}}
-          onCancel={() => {setViewingKey('')}}>
-            {record.comments}
-          </Modal>
+          <CommentsModal trade={record} visible={viewable} onCancel={() => {setViewingKey('')}} />
         ) : (
           <a onClick={() => setViewingKey(record.key)}>
             <ExpandOutlined />

@@ -37,8 +37,6 @@ class Journal extends React.Component {
 
       var trades = trader.trades.filter(trade => !trade.isTransaction);
 
-      var i = trades.length;
-
       trades = trades.reverse().map(trade => {
           return {
             key: trade.tradeID,
@@ -56,7 +54,8 @@ class Journal extends React.Component {
             fees: trade.fees,
             gain: trade.profit,
             comments: trade.comments,
-            hitOrigTP: this.checkIfTakeProfitHit(trade) ? "YES" : "NO"
+            hitOrigTP: this.checkIfTakeProfitHit(trade) ? "YES" : "NO",
+            screenshot: trade.screenshot,
         }
       });
     }

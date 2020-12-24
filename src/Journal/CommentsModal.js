@@ -17,6 +17,7 @@ class CommentModal extends React.Component {
   }
 
   onSubmit = () => {
+
     let newTrade = {
       entryDate: this.state.trade.entryDate,
       exitDate: this.state.trade.exitDate,
@@ -35,13 +36,13 @@ class CommentModal extends React.Component {
     }
 
     //AXIOS POST TRADE
-    console.log(this.state.trade);
     axios({
       method: 'POST',
       url: '/' + this.state.username + '/' + this.state.trade.key + '/updatetrade',
       data: newTrade
     }).then(response => {
       console.log(response);
+      console.log(this.state);
       this.props.onCancel();
     }).catch(err => {
       console.log(err);
@@ -49,10 +50,8 @@ class CommentModal extends React.Component {
   }
 
   updateComment = (event) => {
-    let newtrade = this.state.trade;
-    console.log(newtrade.comments)
-    newtrade.comments = newtrade.comments.concat(event.nativeEvent.data);
-    console.log(newtrade);
+    let newtrade = {...this.state.trade};
+    newtrade.comments = event.target.value;
     this.setState({
       trade: newtrade
     });
@@ -63,7 +62,7 @@ class CommentModal extends React.Component {
     newtrade.screenshot = response;
     this.setState({
       trade: newtrade
-    }, () => {console.log(this.state)});
+    });
   }
 
   beforeUpload = (event) => {
@@ -71,6 +70,7 @@ class CommentModal extends React.Component {
   }
 
   render() {
+    console.log('re render', this.state)
     return(
       <Modal width={1000} visible={this.state.visible}
             onOk={this.onSubmit}

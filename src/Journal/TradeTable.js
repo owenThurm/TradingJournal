@@ -51,7 +51,6 @@ const TradeTable = (props) => {
   const [searchedColumn, setSearchedColumn] = useState('');
   const searchInput = useRef(null);
 
-  console.log(data);
 
   const edit = (record) => {
     form.setFieldsValue({
@@ -319,12 +318,13 @@ const TradeTable = (props) => {
       align: 'center',
       render: (_, record) => {
         const viewable = isViewing(record);
-        console.log('record:', record)
         var image = new Image();
         image.src = record.screenshot;
-        console.log('record', record);
         return viewable ? (
-          <CommentsModal username={props.username} trade={record} visible={viewable} onCancel={() => {setViewingKey('')}} />
+          <CommentsModal username={props.username} trade={record} visible={viewable} onCancel={() => {
+            props.reloadData();
+            setViewingKey('');
+          }} />
         ) : (
           <a onClick={() => setViewingKey(record.key)}>
             <ExpandOutlined />

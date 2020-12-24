@@ -91,7 +91,7 @@ class Journal extends React.Component {
           this.refreshTrades();
           } }/>
         <br/>
-        <TradeTable setups={this.state.setups} username={this.state.username} trades={this.state.trades} onSubmit={this.refreshTrades}/>
+        <TradeTable reloadData={this.refreshTrades} setups={this.state.setups} username={this.state.username} trades={this.state.trades} onSubmit={this.refreshTrades}/>
       </div>
     )
   }

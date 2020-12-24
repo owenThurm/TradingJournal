@@ -33,6 +33,7 @@ class CommentModal extends React.Component {
       profit: this.state.trade.profit,
       comments: this.state.trade.comments,
       isTransaction: false,
+      screenshot: this.state.trade.screenshot,
     }
 
     //AXIOS POST TRADE
@@ -58,7 +59,8 @@ class CommentModal extends React.Component {
   }
 
   stateScreenshotCallback = (response) => {
-    let newtrade = this.state.trade;
+    console.log(response);
+    let newtrade = {...this.state.trade};
     newtrade.screenshot = response;
     this.setState({
       trade: newtrade

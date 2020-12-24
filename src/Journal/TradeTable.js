@@ -104,18 +104,19 @@ const TradeTable = (props) => {
         var newTrade = {
           entryDate: updatedRow.entryDate,
           instrument: updatedRow.instrument,
-          setup: updatedRow.strategy,
-          entryPrice: parseInt(updatedRow.entry),
+          setup: updatedRow.setup,
+          entryPrice: parseInt(updatedRow.entryPrice),
           quantity: parseInt(updatedRow.quantity),
           stopLoss: parseInt(updatedRow.stopLoss),
           takeProfit: parseInt(updatedRow.takeProfit),
           exitDate: updatedRow.exitDate,
-          exitPrice: parseInt(updatedRow.exit),
-          profit: parseInt(updatedRow.gain),
+          exitPrice: parseInt(updatedRow.exitPrice),
+          profit: parseInt(updatedRow.profit),
           fees: parseInt(updatedRow.fees),
           buyOrSell: updatedRow.buyOrSell == 'true',
           comments: updatedRow.comments,
           isTransaction: false,
+          screenshot: updatedRow.screenshot
         }
 
         //Axios update trade
@@ -222,8 +223,8 @@ const TradeTable = (props) => {
       ...getColumnSearchProps('instrument'),
     },
     {
-      title: 'Strategy',
-      dataIndex: 'strategy',
+      title: 'Setup',
+      dataIndex: 'setup',
       editable: true,
       align: 'center',
       filters: props.setups.map(setup => {
@@ -232,7 +233,7 @@ const TradeTable = (props) => {
           value: setup
         }
       }),
-      onFilter: (value, record) => record.strategy.indexOf(value) === 0,
+      onFilter: (value, record) => record.setup.indexOf(value) === 0,
     },
     {
       title: 'Buy/Sell',
@@ -257,17 +258,17 @@ const TradeTable = (props) => {
     },
     {
       title: 'Entry Price',
-      dataIndex: 'entry',
+      dataIndex: 'entryPrice',
       editable: true,
       align: 'center',
-      sorter: (a, b) => a.entry - b.entry
+      sorter: (a, b) => a.entryPrice - b.entryPrice
     },
     {
       title: 'Exit Price',
-      dataIndex: 'exit',
+      dataIndex: 'exitPrice',
       editable: true,
       align: 'center',
-      sorter: (a, b) => a.exit - b.exit
+      sorter: (a, b) => a.exitPrice - b.exitPrice
     },
     {
       title: 'Take Profit',
@@ -299,10 +300,10 @@ const TradeTable = (props) => {
     },
     {
       title: 'Gain $',
-      dataIndex: 'gain',
+      dataIndex: 'profit',
       editable: true,
       align: 'center',
-      sorter: (a, b) => a.gain - b.gain
+      sorter: (a, b) => a.profit - b.profit
     },
     {
       title: 'Original TP Hit',
@@ -321,9 +322,9 @@ const TradeTable = (props) => {
         console.log('record:', record)
         var image = new Image();
         image.src = record.screenshot;
-
+        console.log('record', record);
         return viewable ? (
-          <CommentsModal trade={record} visible={viewable} onCancel={() => {setViewingKey('')}} />
+          <CommentsModal username={props.username} trade={record} visible={viewable} onCancel={() => {setViewingKey('')}} />
         ) : (
           <a onClick={() => setViewingKey(record.key)}>
             <ExpandOutlined />

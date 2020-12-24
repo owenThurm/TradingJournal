@@ -1,20 +1,73 @@
 import React from 'react';
 
-import { Modal, Card, Button, Upload }  from 'antd';
+import { Modal, Card, Button, Upload, Input }  from 'antd';
+import { beforePictureUpload } from '../utils';
+import axios from 'axios';
 
-class CommandModal extends React.Component {
+const { TextArea } = Input;
+
+class CommentModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      username: props.username,
       visible: props.visible,
       trade: props.trade
     }
   }
 
   onSubmit = () => {
-    //AXIOS POST TRADE
+    let newTrade = {
+      entryDate: this.state.trade.entryDate,
+      exitDate: this.state.trade.exitDate,
+      instrument: this.state.trade.instrument,
+      setup: this.state.trade.setup,
+      buyOrSell: this.state.trade.buyOrSell == 'BUY',
+      quantity: this.state.trade.quantity,
+      entryPrice: this.state.trade.entryPrice,
+      exitPrice: this.state.trade.exitPrice,
+      takeProfit: this.state.trade.takeProfit,
+      stopLoss: this.state.trade.stopLoss,
+      fees: this.state.trade.fees,
+      profit: this.state.trade.profit,
+      comments: this.state.trade.comments,
+      isTransaction: false,
+    }
 
-    this.props.onCancel();
+    //AXIOS POST TRADE
+    console.log(this.state.trade);
+    axios({
+      method: 'POST',
+      url: '/' + this.state.username + '/' + this.state.trade.key + '/updatetrade',
+      data: newTrade
+    }).then(response => {
+      console.log(response);
+      this.props.onCancel();
+    }).catch(err => {
+      console.log(err);
+    });
+  }
+
+  updateComment = (event) => {
+    let newtrade = this.state.trade;
+    console.log(newtrade.comments)
+    newtrade.comments = newtrade.comments.concat(event.nativeEvent.data);
+    console.log(newtrade);
+    this.setState({
+      trade: newtrade
+    });
+  }
+
+  stateScreenshotCallback = (response) => {
+    let newtrade = this.state.trade;
+    newtrade.screenshot = response;
+    this.setState({
+      trade: newtrade
+    }, () => {console.log(this.state)});
+  }
+
+  beforeUpload = (event) => {
+    beforePictureUpload(event, this.stateScreenshotCallback);
   }
 
   render() {
@@ -27,10 +80,9 @@ class CommandModal extends React.Component {
                 <img src={this.state.trade.screenshot} style={{width: 900}}/>
               </Card>
               <Card title='Comments'>
-                {this.state.trade.comments}
+                <TextArea value={this.state.trade.comments} onChange={this.updateComment}/>
               </Card>
-              <Button style={{marginLeft: 20, marginTop: 10}}>Edit Comment</Button>
-              <Upload>
+              <Upload beforeUpload={this.beforeUpload}>
                 <Button style={{marginLeft: 20}}> Re-Upload Trade </Button>
               </Upload>
 
@@ -39,4 +91,4 @@ class CommandModal extends React.Component {
   }
 }
 
-export default CommandModal;
+export default CommentModal;

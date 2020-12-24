@@ -25,7 +25,7 @@ const traderSchema = Joi.object().keys({
   password: Joi.string().min(6).required(),
   balance: Joi.number().strict().required(),
   setups: Joi.array().items(Joi.string()).allow(null).required(),
-  trades: Joi.array().items(tradeSchema).required()
+  trades: Joi.array().items(tradeSchema).strict().required()
 });
 
 const traders = db.get('traders');

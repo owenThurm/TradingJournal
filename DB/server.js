@@ -118,7 +118,7 @@ app.post('/', (req, res) => {
   } catch(e) {
     res.status(500);
     res.json({
-      error: 'Dates must be of format DD/MM/YYYY'
+      error: e
     });
   }
 
@@ -212,18 +212,25 @@ app.post('/:username/:tradeID/updatetrade', (req, res) => {
 
   var tradeID = req.params.tradeID;
   var newTrade = req.body;
+  console.log(req.body)
+  console.log('newTrade', newTrade);
 
   try {
+    console.log(newTrade.entryDate);
+    console.log(new Date(newTrade.entryDate));
     newTrade.entryDate = new Date(newTrade.entryDate);
     newTrade.exitDate = new Date(newTrade.exitDate);
   } catch(e) {
-    res.status(500);
+    res.status(505);
     res.json({
-      error: 'Dates must be of format DD/MM/YYYY'
+      error: e
     });
   }
 
+  console.log(newTrade);
+  console.log("GOT TO HERE")
   traders.updateTrade(username, tradeID, newTrade).then(response => {
+    console.log("HERERERERERE")
     res.status(200);
     res.json({
       updated: tradeID,

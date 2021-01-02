@@ -34,7 +34,7 @@ app.get('/:username', (req, res) => {
 //GET STATISTICS FOR ONE TRADER
 app.get('/statistics/:username', (req, res) => {
   var username = req.params.username;
-  console.log(username);
+  //console.log(username);
   traders.getTrader(username).then(response => {
     var trades = response[0].trades;
     var wins = []
@@ -44,8 +44,8 @@ app.get('/statistics/:username', (req, res) => {
     var sumR = 0
     var averageWinner = 0;
     var averageLoser = 0;
-    var sumWins = 0;
-    var sumLosses = 0;
+    var sumWins = 0; // total $ of win profits
+    var sumLosses = 0; // total $ of losses
 
     if (trades.length == 0) {
       return;
@@ -54,31 +54,38 @@ app.get('/statistics/:username', (req, res) => {
     for(var i = 0; i < trades.length; i++) {
       if (trades[i].profit > 0) {
         wins.push(trades[i]);
-        averageWinner += parseInt(trades[i].profit);
+        sumWins += parseInt(trades[i].profit);
+        console.log("IN WINNER");
+        console.log(averageWinner);
       }
       else if (trades[i].profit < 0) {
         losses.push(trades[i]);
-        averageLoser += parseInt(trades[i].profit);
+        sumLosses += parseInt(trades[i].profit);
       }
       else breakeven.push(trades[i]);
 
-      averageR += calculateRiskReward(trades[i])
+      averageR += calculateRiskReward(trades[i]);
       sumR += calculateRiskReward(trades[i]);
 
     }
 
-    sumWins = averageWinner;
-    sumLosses = averageLoser;
+    averageR /= trades.length;
 
-    averageR /= trades.length
-    averageWinner /= wins.length
-    averageLoser /= losses.length
+    
+    if (wins.length > 0) averageWinner = sumWins / wins.length;
+    if (losses.length > 0) averageLoser = sumLosses / losses.length;
 
     var winPercentage = wins.length / (wins.length + losses.length + breakeven.length);
     var lossPercentage = losses.length / (wins.length + losses.length + breakeven.length);
     var expectancy = (averageWinner *  winPercentage) - (averageLoser * lossPercentage);
-    var profitFactor = Math.abs(sumWins / sumLosses);
-
+    var profitFactor = 99999999;
+    
+    if (sumLosses != 0) profitFactor = Math.abs(sumWins / sumLosses);
+    
+    console.log("Win Perce: " + winPercentage);
+    console.log("Loss Perc.: " + lossPercentage);
+    console.log("Avg loser.: " + averageLoser);
+    console.log("Expec: " + expectancy);
 
     res.json({
       statistics: {
@@ -103,8 +110,11 @@ function calculateRiskReward(trade) {
   var stop = parseFloat(trade.stopLoss);
   var exitPrice = parseFloat(trade.exitPrice);
   var entry = parseFloat(trade.entryPrice);
+  console.log(stop);
+  console.log(exitPrice);
+  console.log(entry);
 
-  if (entry == stop) {
+  if (Math.abs(entry-stop) < 0.0001) {
     return 0;
   }
   return (exitPrice - entry) / (entry - stop);

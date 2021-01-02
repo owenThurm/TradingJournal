@@ -53,16 +53,23 @@ function updateBalance(name, update) {
 
 async function addTrade(name, trade) {
   var result = tradeSchema.validate(trade);
+  var profit = trade.profit;
+  console.log("profit: " + profit);
+  var currBalance = -1;
   if(result.error) return Promise.reject(result.error);
   else {
     var newTradeList = await getTrader(name).then(response => {
       trade.tradeID = response[0].trades ? response[0].trades.length+1 : 1;
+      currBalance = response[0].balance;
+      console.log("currBalance: " + currBalance);
       return response[0].trades ? tradeInsertion(trade, response[0].trades) : [trade];
     }).catch(err => {
       console.log(err);
     });
     return traders.findOneAndUpdate({username: name},
-      { $set: { trades: newTradeList } });
+      { 
+        $set: { trades: newTradeList, balance: currBalance + profit }, 
+      });
   }
 }
 

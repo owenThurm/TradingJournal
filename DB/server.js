@@ -34,6 +34,7 @@ app.get('/:username', (req, res) => {
 //GET STATISTICS FOR ONE TRADER
 app.get('/statistics/:username', (req, res) => {
   var username = req.params.username;
+  console.log(username);
   traders.getTrader(username).then(response => {
     var trades = response[0].trades;
     var wins = []
@@ -45,6 +46,10 @@ app.get('/statistics/:username', (req, res) => {
     var averageLoser = 0;
     var sumWins = 0;
     var sumLosses = 0;
+
+    if (trades.length == 0) {
+      return;
+    }
 
     for(var i = 0; i < trades.length; i++) {
       if (trades[i].profit > 0) {

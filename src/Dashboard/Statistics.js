@@ -26,6 +26,7 @@ class Statistics extends React.Component {
 
         // axios request to get statistics
         axios.get("/statistics/" + this.state.username).then(response => {
+            console.log(response);
             this.setState({
                 statistics: response.data.statistics
             })

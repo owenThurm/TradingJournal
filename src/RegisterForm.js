@@ -2,11 +2,22 @@ import React from 'react';
 
 import { Form, Input, Button, Checkbox } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import axios from 'axios';
 
 function RegisterForm() {
 
   const onFinish = (values) => {
-    console.log('Received values of form: ', values);
+    console.log('Received values of register form: ', values);
+    // Create trader
+    axios.post("/",
+    {
+      "username": values.username,
+      "password": values.password,
+      "balance": 0,
+      "setups": [],
+      "trades": []
+    });
+
   };
 
   const checkLoginCredentials = (values) => {

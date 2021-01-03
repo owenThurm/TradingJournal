@@ -16,7 +16,7 @@ const tradeSchema = Joi.object().keys({
   fees: Joi.number().strict().required(),
   buyOrSell: Joi.boolean().strict().required(),
   comments: Joi.string().allow(null).allow(''),
-  screenshot: Joi.string(),
+  screenshot: Joi.string().allow(null).allow(''),
   isTransaction: Joi.boolean().strict().required()
 });
 
@@ -67,8 +67,8 @@ async function addTrade(name, trade) {
       console.log(err);
     });
     return traders.findOneAndUpdate({username: name},
-      { 
-        $set: { trades: newTradeList, balance: currBalance + profit }, 
+      {
+        $set: { trades: newTradeList, balance: currBalance + profit },
       });
   }
 }

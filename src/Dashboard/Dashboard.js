@@ -5,8 +5,9 @@ import { AccountBalance } from './AccountBalance';
 import EquityGraph from './EquityGraph';
 import Statistics from './Statistics';
 import 'antd/dist/antd.css';
-import { Row, Col } from 'antd';
+import { Row, Col, Card } from 'antd';
 import axios from 'axios';
+import Recommendation from './Reccomendation';
 
 class Dashboard extends React.Component {
 
@@ -32,14 +33,22 @@ class Dashboard extends React.Component {
       <div className="DashboardContainer">
         <div>
           <Row gutter={[16, 16]}>
-            <Col flex="4"> <AccountBalance balance={this.state.balance} /></Col>
-            <Col flex="20"> <EquityGraph /></Col>
+            <Col flex="5">
+              <AccountBalance balance={this.state.balance} />
+              <br />
+              <WeeklyChange change={3.2} />
+              <br />
+              <Recommendation recommendation='Place your stop loss higher on buy orders' />
+            </Col>
+            <Col flex="10"> <EquityGraph /></Col>
           </Row>
           <Row gutter={[16, 16]}>
-            <Col flex="auto"><WeeklyChange change={3.2} /></Col>
+            <Col>
+              <Statistics />
+            </Col>
           </Row>
         </div>
-        <Statistics />
+
       </div>
 
 

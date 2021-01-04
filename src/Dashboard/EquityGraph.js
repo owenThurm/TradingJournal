@@ -1,6 +1,7 @@
 import React from 'react';
 import { Chart } from 'chart.js';
 import axios from 'axios';
+import { Card } from 'antd';
 
 class EquityGraph extends React.Component {
   constructor(props) {
@@ -76,10 +77,13 @@ class EquityGraph extends React.Component {
 
   render() {
     return (
-      <div className="EquityGraph" style={{ width: 400, height: 200 }}>
-        <canvas id="myChart" width="300" height="300"></canvas>
-        {this.state.graph}
-      </div>
+      <Card size={'small'}style={{height: 400, width: 920}} bordered={true} title={'Account Balance'} headStyle={{textAlign: 'center'}}
+      bodyStyle={{}} type='inner'>
+        <div className="EquityGraph" style={{ width: 850, height: 100, marginLeft: 30 }}>
+          <canvas id="myChart" width="300" height="120"></canvas>
+          {this.state.graph}
+        </div>
+      </Card>
     )
   };
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import Winrate from './Winrate';
-import { Row, Col, Progress } from 'antd';
+import { Row, Col, Progress, Card } from 'antd';
 import axios from 'axios';
 
 class Statistics extends React.Component {
@@ -47,27 +47,31 @@ class Statistics extends React.Component {
 
 
         return (
-            <div>
-                <h1>Statistics Test</h1>
-                <Row gutter={[24, 16]}>
-                    <Col span={3}>
-                        <h3 className="winner">Winners: {this.state.statistics.numWinners}</h3>
-                        <h3 className="loser">Losers: {this.state.statistics.numLosers}</h3>
-                    </Col>
-                    <Col span={8}><Winrate winRate={winrate} loseRate={0}/></Col>
-                </Row>
-                <Row gutter={[24, 16]}>
-                    <Col span={8}>Average Winner: {this.state.statistics.averageWinner}</Col>
-                    <Col span={8}>Average Loser: {this.state.statistics.averageLoser}</Col>
-                    <Col span={8}>Sum R multiple: {this.state.statistics.sumR}</Col>
-                </Row>
-                <Row gutter={[24, 16]}>
-                    <Col span={8}>Average R multiple: {this.state.statistics.averageR}</Col>
-                    <Col span={8}>Expectancy: {this.state.statistics.expectancy}</Col>
-                    <Col span={8}>Profit Factor: {this.state.statistics.profitFactor}</Col>
-                </Row>
-            </div>
-
+            <Card title='Overall Statistics' style={{width: 1152, height: 230}} type='inner'>
+                    <Row gutter={[24, 16]}>
+                        <Col span={4}>
+                            <Card size='small' style={{width: 120}} bordered={false}
+                            headStyle={{textAlign: 'center'}} bodyStyle={{textAlign: 'center', color: 'green', fontSize: 18}}
+                            >Winners: {this.state.statistics.numWinners}</Card>
+                            <Card size='small' style={{width: 120}} bordered={false}
+                            headStyle={{textAlign: 'center'}} bodyStyle={{textAlign: 'center', color: 'red', fontSize: 18}}
+                            >Losers: {this.state.statistics.numLosers}</Card>
+                        </Col>
+                        <Col span={6}><Winrate winRate={winrate} loseRate={0}/></Col>
+                        <Col>
+                            <Row gutter={[24, 16]}>
+                                <Col span={8}>Average Winner: <br />{this.state.statistics.averageWinner}</Col>
+                                <Col span={8}>Average Loser: <br />{this.state.statistics.averageLoser}</Col>
+                                <Col span={8}>Sum R multiple: <br />{this.state.statistics.sumR.toFixed(2)}</Col>
+                            </Row>
+                            <Row gutter={[24, 16]}>
+                                <Col span={8}>Average R multiple: <br />{this.state.statistics.averageR.toFixed(2)}</Col>
+                                <Col span={8}>Expectancy: <br />{this.state.statistics.expectancy.toFixed(2)}</Col>
+                                <Col span={8}>Profit Factor: <br />{this.state.statistics.profitFactor.toFixed(2)}</Col>
+                            </Row>
+                        </Col>
+                    </Row>
+            </Card>
         );
     }
 }
